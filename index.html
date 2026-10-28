@@ -1,0 +1,1643 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="color-scheme" content="light dark">
+<title>Curso NFPA 70E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: aula virtual — barra superior fija, índice de módulos a la izquierda, columna de lectura de ~68ch, navegación anterior/siguiente al pie de cada lección. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunken:#eaeef4; --ink:#16223a; --muted:#56627a; --line:#d5dce7;
+  --navy:#1d3a66; --accent:#c2410c; --accent-ink:#9a3412; --accent-soft:#fdeadf; --on-accent:#ffffff;
+  --hazard:#f2b705; --ok:#2b8a3e; --ok-soft:#e3f4e7; --bad:#c92a2a; --bad-soft:#fbe4e4;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1420; --surface:#141e2e; --sunken:#1a2639; --ink:#e4e9f1; --muted:#9aa7bb; --line:#2a3851;
+  --navy:#9dbdf0; --accent:#ff7d3b; --accent-ink:#ff9a62; --accent-soft:#3a2216; --on-accent:#1a0d05;
+  --hazard:#f5c542; --ok:#5fd27a; --ok-soft:#173222; --bad:#ff7a7a; --bad-soft:#3a1a1c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1420; --surface:#141e2e; --sunken:#1a2639; --ink:#e4e9f1; --muted:#9aa7bb; --line:#2a3851;
+  --navy:#9dbdf0; --accent:#ff7d3b; --accent-ink:#ff9a62; --accent-soft:#3a2216; --on-accent:#1a0d05;
+  --hazard:#f5c542; --ok:#5fd27a; --ok-soft:#173222; --bad:#ff7a7a; --bad-soft:#3a1a1c; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html{height:100%}
+body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:clamp(2rem,4.5vw,2.8rem);font-weight:700}
+h2{font-size:1.75rem;font-weight:700}
+h3{font-size:1.3rem;font-weight:600}
+h4{font-size:1.08rem;font-weight:600}
+p{margin:0}
+a{color:var(--navy)}
+:focus-visible{outline:3px solid var(--hazard);outline-offset:2px}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem;color:var(--accent-ink)}
+.muted{color:var(--muted)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- barra superior ---------- */
+.topbar{position:sticky;top:var(--tbtop,env(safe-area-inset-top,0px));z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 16px}
+:root .topbar{background:#1d3a66}
+.topbar img{height:36px;width:auto;background:#fff;border-radius:4px;padding:3px 5px}
+.topbar .t{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.2;min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .t small{display:block;font-family:var(--f-body);font-weight:400;font-size:.78rem;opacity:.8}
+.prog{display:flex;align-items:center;gap:10px;font-size:.9rem}
+.prog .bar{width:120px;height:8px;border-radius:4px;background:rgba(255,255,255,.22);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:#ff8a4c;width:0;transition:width .4s}
+.menu-btn{display:none;background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:var(--r);padding:6px 12px;font:inherit;font-size:.95rem;cursor:pointer;align-items:center;gap:6px}
+
+/* ---------- estructura ---------- */
+.shell{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:calc(100% - 56px)}
+nav.toc{background:var(--surface);border-right:1px solid var(--line);padding:18px 0 40px;position:sticky;top:var(--tb,57px);align-self:start;max-height:calc(100vh - var(--tb,57px));max-height:calc(100dvh - var(--tb,57px));overflow:auto;overscroll-behavior:contain}
+.toc .mod{padding:14px 18px 6px;font-family:var(--f-display);font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.toc button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;padding:7px 18px;font:inherit;font-size:.92rem;line-height:1.35;color:var(--ink);cursor:pointer;border-left:3px solid transparent}
+@media (hover:hover) and (pointer:fine){.toc button:hover{background:var(--sunken)}}
+.toc button[aria-current="true"]{border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.toc button .dot{flex:none;width:16px;height:16px;margin-top:2px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:10px;color:var(--on-accent)}
+.toc button.done .dot{background:var(--ok);border-color:var(--ok)}
+.toc button.done .dot::after{content:"✓";color:#fff;font-weight:700}
+.toc button.locked{color:var(--muted)}
+main{padding:32px 16px 80px;min-width:0}
+.lesson{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.lesson:first-of-type{max-width:1000px}
+.lesson > header{display:flex;flex-direction:column;gap:6px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.lesson p,.lesson li{max-width:68ch}
+.lesson ul,.lesson ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.pager{max-width:760px;margin:40px auto 0;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;border-radius:var(--r);padding:10px 18px;cursor:pointer;border:1.5px solid var(--navy);background:transparent;color:var(--navy)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:6px 12px;font-size:.9rem}
+
+/* ---------- bloques de contenido ---------- */
+.callout{border-radius:var(--r);padding:14px 16px;background:var(--sunken);display:flex;flex-direction:column;gap:6px}
+.callout.warn{background:var(--accent-soft)}
+.callout b.k{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;color:var(--accent-ink)}
+.figure{display:flex;flex-direction:column;gap:6px;margin:0}
+.figure img{border-radius:var(--r);border:1px solid var(--line);display:block;height:auto}
+.figure img.native{width:auto;max-width:100%;margin-inline:auto}
+img{height:auto}
+.figure figcaption{font-size:.9rem;color:var(--muted)}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}
+.duo > *{min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:.85rem;padding:2px 8px;border-radius:999px;background:var(--sunken);color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-weight:600;font-size:.95rem;background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* fórmulas */
+.formula{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:var(--r);padding:14px 16px;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:1.18rem;overflow-x:auto;white-space:nowrap}
+.formula var{font-style:italic}
+.formula .note{display:block;font-family:var(--f-body);font-size:.82rem;color:var(--muted);white-space:normal;margin-top:6px}
+.vars{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.93rem}
+.vars dt{font-family:var(--f-mono);font-weight:500}
+.vars dd{margin:0}
+
+/* tarjetas giratorias */
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.flip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-height:150px;text-align:left;font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:8px}
+.flip .front{font-family:var(--f-display);font-weight:700;font-size:1.25rem}
+.flip .hint{font-size:.875rem;color:var(--muted);margin-top:auto}
+.flip .back{display:none;font-size:.93rem}
+.flip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.flip[aria-pressed="true"] .back{display:block}
+.flip[aria-pressed="true"] .hint{display:none}
+
+/* comprobación de conocimientos */
+.kc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px}
+.kc .q{font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{font:inherit;text-align:left;padding:10px 14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:var(--r);cursor:pointer;line-height:1.4}
+@media (hover:hover) and (pointer:fine){.opt:hover:not(:disabled){border-color:var(--navy)}}
+.opt.sel{border-color:var(--navy);background:var(--sunken)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.fb{padding:10px 12px;border-radius:var(--r);font-size:.93rem}
+.fb.right{background:var(--ok-soft)}
+.fb.wrong{background:var(--bad-soft)}
+.kc-head{display:flex;gap:8px;align-items:center}
+
+/* clasificador */
+.sorter{display:flex;flex-direction:column;gap:8px}
+.sorter .row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.sorter .row span{min-width:0;flex:1 1 220px}
+.sorter .row .choices{display:flex;gap:6px}
+.sorter .row.right{border-color:var(--ok);background:var(--ok-soft)}
+.sorter .row.wrong{border-color:var(--bad);background:var(--bad-soft)}
+
+/* diagrama falla */
+.svgwrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+.svgwrap svg{display:block;width:100%;height:auto;min-width:420px}
+.svgwrap text{fill:var(--ink);font-family:var(--f-display)}
+.bus{fill:var(--accent)}
+.svgline{stroke:var(--muted)}
+
+/* efectos del arco */
+.effects{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:10px}
+.effect{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.effect b{font-family:var(--f-display);font-size:1.45rem;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1}
+.effect span{font-size:.88rem;color:var(--muted)}
+
+/* simulador y calculadora */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:14px}
+.sim label{display:flex;flex-direction:column;gap:4px;font-size:.9rem;font-weight:500}
+.sim input[type=range]{width:100%;accent-color:var(--accent)}
+.sim .val{font-family:var(--f-mono);color:var(--accent)}
+.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px}
+.grid-form label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;font-weight:500}
+.grid-form input,.grid-form select{font:inherit;font-family:var(--f-mono);font-size:16px;padding:8px 10px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--ink);width:100%}
+.meter{height:14px;border-radius:7px;background:var(--sunken);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px}
+.results div{background:var(--sunken);border-radius:var(--r);padding:10px 12px;display:flex;flex-direction:column}
+.results small{font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.results b{font-family:var(--f-mono);font-size:1.15rem;font-variant-numeric:tabular-nums}
+
+/* etiqueta de advertencia arco eléctrico (colores fijos, como una etiqueta real ANSI Z535) */
+.label-af{border:3px solid #111;border-radius:4px;background:#fff;color:#111;max-width:420px;font-family:var(--f-body)}
+.label-af .hd{background:#f47b20;color:#111;font-family:var(--f-display);font-weight:700;font-size:1.5rem;letter-spacing:.06em;text-align:center;padding:6px;display:flex;align-items:center;justify-content:center;gap:10px}
+.label-af .hd svg{width:28px;height:28px}
+.label-af .sub{background:#111;color:#fff;text-align:center;font-family:var(--f-display);font-weight:600;letter-spacing:.04em;padding:4px;font-size:.95rem}
+.label-af dl{display:grid;grid-template-columns:1fr auto;margin:0;padding:10px 14px;gap:4px 12px;font-size:.92rem}
+.label-af dd{margin:0;font-family:var(--f-mono);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.label-af .ft{border-top:2px solid #111;padding:6px 14px;font-size:.85rem}
+
+/* pasos */
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px}
+.step .n{font-family:var(--f-display);font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-size:.85rem}
+.calcline{font-family:var(--f-mono);font-size:.92rem;background:var(--sunken);border-radius:var(--r);padding:10px 12px;overflow-x:auto;white-space:pre}
+.ans{font-family:var(--f-mono);font-weight:600;font-size:1.05rem}
+
+/* escala de energía */
+.scale{display:flex;flex-direction:column;gap:8px}
+.scale .r{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+.scale .r b{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.scale .track{background:var(--sunken);border-radius:4px;overflow:hidden}
+.scale .track i{display:block;height:10px;background:linear-gradient(90deg,var(--hazard),var(--accent))}
+.scale .r p{grid-column:2;font-size:.9rem;margin-top:-2px}
+
+/* portada */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:center;padding-block:8px 4px}
+.hero-copy{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hero h1{font-size:clamp(2.3rem,5.2vw,3.5rem);line-height:1.05;letter-spacing:-.01em}
+.hero .hl{background:var(--accent);color:var(--on-accent);padding:0 .22em;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero .lead{font-size:1.12rem;color:var(--muted);max-width:46ch}
+.hero-art svg{width:100%;height:auto;display:block;border-radius:28px}
+.btn.start{border-radius:999px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat b{font-family:var(--f-display);font-weight:700;font-size:1.7rem;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat span{font-size:.9rem;color:var(--muted);line-height:1.35}
+.sec-title{font-size:1.5rem;margin-top:12px}
+.profiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.profile{font:inherit;text-align:left;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;cursor:pointer;min-width:0;transition:border-color .15s,transform .1s}
+.profile b{font-family:var(--f-display);font-size:1.2rem;font-weight:700}
+.profile span:not(.pico){font-size:.95rem;color:var(--muted);line-height:1.45}
+.profile em{font-style:normal;font-weight:600;color:var(--accent-ink);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
+.profile .pico{width:40px;height:40px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center}
+.profile .pico .ico{width:22px;height:22px}
+.profile:active{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){.profile:hover{border-color:var(--accent)}.mod-row:hover{background:var(--sunken)}}
+.syllabus{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.mod-row{font:inherit;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer;min-height:56px}
+.mod-row:last-child{border-bottom:0}
+.mod-row .mn{flex:none;width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--surface);display:grid;place-items:center;font-family:var(--f-display);font-weight:700}
+.mod-row .mt{flex:1;min-width:0;display:flex;flex-direction:column}
+.mod-row .mt small{color:var(--muted);font-size:.9rem}
+.mod-row .mm{flex:none;font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+@media (max-width:900px){.stats{grid-template-columns:repeat(auto-fit,minmax(min(100%,9.5rem),1fr))}.profiles{grid-template-columns:1fr}}
+.stat b{overflow-wrap:anywhere}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:10px}
+.facts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.facts small{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.facts b{font-family:var(--f-display);font-size:1.12rem}
+
+/* evaluación */
+.exam-q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px}
+.exam-q .num{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.exam-q.right{border-color:var(--ok)}
+.exam-q.wrong{border-color:var(--bad)}
+.grade{display:flex;gap:20px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grade .big{font-family:var(--f-display);font-weight:700;font-size:3.4rem;line-height:1;font-variant-numeric:tabular-nums}
+.grade.pass .big{color:var(--ok)}
+.grade.fail .big{color:var(--bad)}
+.constancia{border:2px solid var(--navy);border-radius:var(--r);padding:24px;background:var(--surface);display:flex;flex-direction:column;gap:10px;text-align:center;align-items:center}
+.constancia img{height:60px;width:auto}
+
+
+.start-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn.start{font-family:var(--f-display);font-size:1.3rem;letter-spacing:.03em;padding:14px 30px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px}
+.gallery .figure img{width:100%;height:200px;object-fit:cover}
+.gallery .figure img.native{width:auto;height:auto;max-height:200px;object-fit:contain;background:var(--sunken)}
+.figure.side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;align-items:center}
+.figure.side img{width:100%}
+@media (max-width:560px){.figure.side{grid-template-columns:1fr}}
+.sens{position:relative;overflow:hidden;border-radius:var(--r)}
+.sens img{filter:blur(18px);transform:scale(1.1);transition:filter .3s}
+.sens.show img{filter:none;transform:none}
+.sens button{position:absolute;inset:auto 8px 8px 8px;font:inherit;font-size:.85rem;font-weight:600;padding:8px;border-radius:var(--r);border:0;background:rgba(0,0,0,.72);color:#fff;cursor:pointer}
+.sens.show button{display:none}
+
+/* ===== auditoría UI/UX: táctil, foco, navegación ===== */
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,.btn,.opt,.flip,.toc button,.menu-btn,.term,summary,.sens button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,select,textarea{font-size:16px}
+.sim input[type=range]{touch-action:pan-y}
+.toc button:active{background:var(--sunken)}
+.opt:active:not(:disabled){border-color:var(--navy)}
+.btn,.btn.sm,.menu-btn,.narr-bar select,.grid-form input,.grid-form select,.sens button,.opt,.flip{min-height:44px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background-color .15s,transform .1s}
+.btn:active:not(:disabled),.opt:active:not(:disabled),.flip:active{transform:scale(.98)}
+.opt,.flip,.toc button{transition:background-color .15s,border-color .15s}
+@media (hover:hover) and (pointer:fine){.btn.primary:hover:not(:disabled){filter:brightness(1.08)}}
+.ico{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+.ico.fill{fill:currentColor;stroke:none}
+.toc button{min-height:44px;align-items:center}
+.toc button .dot{margin-top:0}
+.toc button .min{margin-left:auto;font-family:var(--f-mono);font-size:.78rem;color:var(--muted);flex:none}
+.narr-bar label{min-height:44px}
+.narr-bar input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent)}
+.narr details summary{min-height:44px;display:flex;align-items:center}
+.sim input[type=range]{height:44px}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;background:var(--accent);color:var(--on-accent);padding:10px 14px;border-radius:var(--r);font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
+.lesson h1:focus,.lesson h2:focus{outline:none}
+.lesson h1:focus-visible,.lesson h2:focus-visible{outline:3px solid var(--hazard);outline-offset:4px}
+.dur{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0}
+.localnote{font-size:.9rem;color:var(--muted)}
+/* barra inferior fija */
+.pager{position:sticky;bottom:0;z-index:12;background:var(--bg);border-top:1px solid var(--line);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));align-items:center;flex-wrap:nowrap;flex-direction:column;gap:8px}
+.pager.wide{max-width:1000px}
+.pager .row{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
+.pager .pos{font-family:var(--f-mono);font-size:.9rem;color:var(--muted);white-space:nowrap}
+.subtitle{width:100%;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:8px 12px;font-size:.98rem;line-height:1.45;max-height:5.2em;overflow:auto}
+/* fondo del índice en celular */
+.scrim{display:none}
+@media (max-width:860px){
+  .scrim{position:fixed;inset:0;z-index:14;background:rgba(8,14,24,.5)}
+  .scrim.on{display:block}
+  .pager .btn{flex:1 1 0;max-width:44%}
+  .narr .who{display:none}
+}
+/* fórmulas legibles en celular */
+@media (max-width:560px){
+  .formula{white-space:normal;font-size:1.05rem;line-height:1.7}
+  .formula > *{white-space:nowrap}
+}
+/* glosario emergente */
+.term{font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:2px dotted var(--accent);cursor:help;text-align:inherit}
+.gloss{position:fixed;z-index:40;max-width:min(340px,calc(100vw - 32px));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 8px 24px rgba(0,0,0,.18);padding:12px 14px;font-size:.95rem;line-height:1.45}
+.gloss b{display:block;font-family:var(--f-display);font-size:1rem;margin-bottom:2px}
+/* gráfico del simulador */
+.chart{width:100%;max-width:560px;margin-inline:auto;height:auto;display:block}
+.chart .band{fill:var(--accent)}
+.chart .axis{stroke:var(--line)}
+.chart .curve{fill:none;stroke:var(--navy);stroke-width:3}
+.chart .dot{fill:var(--accent);stroke:var(--surface);stroke-width:3}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:15px}
+.chart .bl{fill:var(--ink);font-family:var(--f-display);font-size:15px;font-weight:600}
+.cert-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+/* ===== break-ui / mobile-native ===== */
+.topbar{padding-top:calc(10px + var(--sat,0px))}
+.pager .btn{min-width:0;white-space:nowrap}
+.pager .pos{flex:none}
+.prog{flex:none}
+.results b,.constancia h3,.grade b{overflow-wrap:anywhere}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:420px){
+  .pager #prevBtn{flex:0 0 auto;padding-inline:12px}
+  .pager #prevBtn .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .pager #nextBtn{flex:1 1 auto;max-width:none}
+  .prog .bar{display:none}
+  .menu-btn{padding-inline:10px;min-width:44px;justify-content:center}
+  .menu-btn .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .topbar{gap:10px}
+}
+.lesson{hyphens:auto;-webkit-hyphens:auto}
+h1,h2,h3,h4{overflow-wrap:break-word}
+.toc button .tt{min-width:0;overflow-wrap:anywhere}
+.facts div,.facts small,.facts b,.flip .front,.results small,.effect b,.eyebrow,.sorter .row span{overflow-wrap:anywhere;min-width:0}
+/* relato */
+.narr{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.narr-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.narr-bar label{display:flex;gap:6px;align-items:center;font-size:.88rem;color:var(--muted)}
+.narr-bar select{font:inherit;font-size:16px;padding:4px 6px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--ink)}
+.narr-bar .who{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.82rem;color:var(--accent);margin-right:auto}
+.narr-cap{font-size:1.02rem;line-height:1.5;background:var(--sunken);border-radius:var(--r);padding:10px 12px;min-height:2.6em}
+.narr-cap:empty{display:none}
+.narr details summary{cursor:pointer;font-size:.9rem;color:var(--navy);font-weight:500}
+.narr details p{margin-top:8px;font-size:.95rem;max-width:68ch}
+.narr details span.on{background:var(--accent-soft);border-radius:3px;box-shadow:0 0 0 2px var(--accent-soft)}
+.narr .note{font-size:.85rem;color:var(--muted)}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  nav.toc{position:fixed;top:var(--tb,57px);bottom:0;left:0;width:min(340px,86vw);z-index:15;max-height:none;transform:translateX(-105%);transition:transform .25s;border-right:1px solid var(--line);visibility:hidden}
+  nav.toc.open{visibility:visible}
+  nav.toc.open{transform:none}
+  .menu-btn{display:inline-flex}
+  .prog .bar{width:60px}
+  .hero{grid-template-columns:1fr}
+  .hero-art{order:-1;max-width:420px}
+  .topbar .t small,.hide-sm{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== márgenes y ritmo del texto ===== */
+body{line-height:1.65}
+main{padding:28px 20px 96px}
+@media (min-width:600px){main{padding:36px 32px 96px}}
+@media (min-width:1100px){main{padding:44px 48px 104px}}
+.lesson{gap:22px}
+.lesson > header{gap:8px;padding-bottom:14px}
+.lesson > h2,.lesson > h3,.lesson > .sec-title{margin-top:14px}
+.lesson > h2 + *,.lesson > h3 + *,.lesson > .sec-title + *{margin-top:-10px}
+.lesson p,.lesson li{max-width:68ch}
+.lesson ul,.lesson ol{padding-left:1.45em;gap:8px}
+.lesson li::marker{color:var(--muted)}
+.callout{padding:18px 22px;gap:8px;border-radius:10px}
+.card,.kc,.step,.sim,.exam-q,.narr{padding:20px 22px}
+.flip{padding:18px 20px}
+.effect{padding:14px 16px}
+.formula{padding:16px 20px}
+.calcline{padding:12px 16px}
+.figure{gap:8px}
+.figure figcaption{line-height:1.5;padding-inline:2px}
+th,td{padding:11px 14px}
+.vars{gap:6px 16px}
+.opt{padding:12px 16px}
+.sorter .row{padding:12px 16px}
+.fb{padding:12px 14px}
+.facts div{padding:12px 14px}
+.pager{max-width:760px}
+@media (max-width:599px){
+  .callout{padding:16px 18px}
+  .card,.kc,.step,.sim,.exam-q,.narr{padding:16px 18px}
+  .formula{padding:14px 16px}
+  th,td{padding:10px 12px}
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 9l8 2v10M3 21h18M7 8h2M7 12h2M7 16h2M15 13h2M15 17h2"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+</svg>
+<a class="skip" href="#main">Ir al contenido</a>
+<div class="topbar">
+  <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="toc" aria-label="Índice"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span class="lbl">Índice</span></button>
+  <img width="256" height="193" src="img/logo.png" alt="SSGI OTEC">
+  <div class="t">NFPA 70E<span class="hide-sm"> · Seguridad eléctrica en lugares de trabajo</span><small>SSGI OTEC · Curso e-learning asincrónico</small></div>
+  <div class="prog"><span class="tnum" id="progTxt">0%</span><span class="bar"><i id="progBar"></i></span></div>
+</div>
+
+<div class="shell">
+<div class="scrim" id="scrim"></div>
+<nav class="toc" id="toc" aria-label="Índice del curso"></nav>
+<main id="main" tabindex="-1">
+
+<!-- ================= INICIO ================= -->
+<section class="lesson" data-mod="Inicio" data-title="Bienvenida y ficha del curso">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Curso e-learning · NFPA 70E · SSGI OTEC</span>
+      <h1>Trabaja seguro frente al <span class="hl">arco eléctrico</span></h1>
+      <p class="lead">Aprende a reconocer el riesgo, calcular la energía incidente y elegir la protección correcta antes de intervenir un tablero. A tu ritmo, con relato en audio.</p>
+      <div class="start-row"><button class="btn primary start" id="startBtn" type="button"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Iniciar curso</button><button class="btn" id="resumeBtn" type="button" hidden>Continuar donde quedé</button></div>
+      <p class="muted" style="font-size:.9rem">Al iniciar, el relato de cada lección se reproduce con audio. Puedes desactivarlo en cualquier momento.</p>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 420 360" role="img" aria-label="Ilustración: electricista con traje de protección contra arco usa una pértiga para operar un tablero desde fuera del límite de arco">
+        <defs><radialGradient id="arcGlow"><stop offset="0" stop-color="#fff7cf"/><stop offset=".45" stop-color="#ffc94a" stop-opacity=".85"/><stop offset="1" stop-color="#ff8a2a" stop-opacity="0"/></radialGradient></defs>
+        <rect x="0" y="0" width="420" height="360" rx="28" fill="#e6edf7"/>
+        <rect x="0" y="300" width="420" height="60" rx="0" fill="#d5deeb"/>
+        <rect x="0" y="300" width="420" height="4" fill="#c3cfe0"/>
+        <g>
+          <rect x="34" y="58" width="122" height="244" rx="8" fill="#33435c"/>
+          <rect x="44" y="70" width="102" height="150" rx="5" fill="#45577a"/>
+          <g fill="#cdd7e6">
+            <rect x="56" y="84" width="16" height="30" rx="3"/><rect x="78" y="84" width="16" height="30" rx="3"/><rect x="100" y="84" width="16" height="30" rx="3"/><rect x="122" y="84" width="14" height="30" rx="3"/>
+            <rect x="56" y="126" width="16" height="30" rx="3"/><rect x="78" y="126" width="16" height="30" rx="3"/><rect x="100" y="126" width="16" height="30" rx="3"/><rect x="122" y="126" width="14" height="30" rx="3"/>
+            <rect x="56" y="168" width="80" height="38" rx="4"/>
+          </g>
+          <rect x="50" y="232" width="90" height="56" rx="3" fill="#ffffff" stroke="#111" stroke-width="2"/>
+          <rect x="51" y="233" width="88" height="14" fill="#f47b20"/>
+          <path d="M95 236l6 9h-12z" fill="#111"/>
+          <g fill="#111"><rect x="60" y="254" width="70" height="4" rx="2"/><rect x="60" y="263" width="56" height="4" rx="2"/><rect x="60" y="272" width="64" height="4" rx="2"/></g>
+        </g>
+        <circle cx="152" cy="148" r="46" fill="url(#arcGlow)"/>
+        <polyline points="140,128 152,140 144,148 158,158 150,166" fill="none" stroke="#fffbe6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="232" y1="58" x2="232" y2="300" stroke="#c2410c" stroke-width="3" stroke-dasharray="8 7"/>
+        <rect x="164" y="28" width="136" height="28" rx="14" fill="#c2410c"/>
+        <text x="232" y="47" text-anchor="middle" textLength="112" lengthAdjust="spacingAndGlyphs" font-family="Barlow Semi Condensed, Arial Narrow, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">LÍMITE DE ARCO</text>
+        <line x1="166" y1="326" x2="300" y2="326" stroke="#33435c" stroke-width="2.5"/>
+        <path d="M166 326l9-5v10zM300 326l-9-5v10z" fill="#33435c"/>
+        <rect x="216" y="314" width="34" height="24" rx="6" fill="#e6edf7"/>
+        <text x="233" y="331" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" font-weight="600" fill="#33435c">D</text>
+        <g>
+          <rect x="288" y="226" width="24" height="70" rx="8" fill="#2a5aa0"/>
+          <rect x="316" y="226" width="24" height="70" rx="8" fill="#2a5aa0"/>
+          <rect x="284" y="288" width="30" height="14" rx="6" fill="#2a2a2a"/>
+          <rect x="314" y="288" width="30" height="14" rx="6" fill="#2a2a2a"/>
+          <rect x="276" y="140" width="76" height="100" rx="22" fill="#3471c4"/>
+          <rect x="300" y="146" width="28" height="90" rx="6" fill="#2a5aa0" opacity=".35"/>
+          <path d="M350 160c14 14 16 40 10 64" stroke="#3471c4" stroke-width="20" fill="none" stroke-linecap="round"/>
+          <circle cx="359" cy="228" r="10" fill="#1d1d1d"/>
+          <path d="M280 166c-18 2-30 6-40 12" stroke="#3471c4" stroke-width="20" fill="none" stroke-linecap="round"/>
+          <line x1="248" y1="182" x2="164" y2="150" stroke="#f2b705" stroke-width="7" stroke-linecap="round"/>
+          <line x1="198" y1="163" x2="206" y2="166" stroke="#c98d00" stroke-width="8"/>
+          <circle cx="240" cy="178" r="10" fill="#1d1d1d"/>
+          <rect x="284" y="78" width="60" height="74" rx="26" fill="#3471c4"/>
+          <rect x="293" y="98" width="42" height="28" rx="8" fill="#1f2733"/>
+          <path d="M298 104h18" stroke="#8fb0d8" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+          <rect x="286" y="68" width="56" height="20" rx="10" fill="#f2b705"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="stats" aria-label="Datos clave">
+    <div class="stat"><b>19.400&nbsp;°C</b><span>puede alcanzar un arco eléctrico</span></div>
+    <div class="stat"><b>1,2&nbsp;cal/cm²</b><span>bastan para una quemadura de segundo grado</span></div>
+    <div class="stat"><b>4&nbsp;h · 21</b><span>lecciones a tu ritmo, con relato en audio</span></div>
+    <div class="stat"><b>Nota 4,0</b><span>para aprobar y obtener tu constancia</span></div>
+  </div>
+  <h2 class="sec-title">¿Por dónde empiezo?</h2>
+  <div class="profiles">
+    <button class="profile" type="button" data-act="start"><span class="pico"><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg></span><b>Electricistas y técnicos</b><span>Recorrido completo: del marco normativo al cálculo de la energía incidente.</span><em>Iniciar curso<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></em></button>
+    <button class="profile" type="button" data-act="temario"><span class="pico"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span><b>Supervisores y prevencionistas</b><span>Revisa el temario y pon foco en la evaluación de riesgos, el EPP y la jerarquía de controles.</span><em>Ver el temario<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></em></button>
+    <button class="profile" type="button" data-act="ficha"><span class="pico"><svg class="ico" aria-hidden="true"><use href="#i-building"/></svg></span><b>Empresas y OTEC</b><span>Disponible como paquete SCORM 1.2 para tu plataforma y como app instalable en celulares.</span><em>Ver la ficha<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></em></button>
+  </div>
+  <h2 class="sec-title" id="temario">Temario</h2>
+  <div class="syllabus">
+    <button type="button" class="mod-row" data-go="1"><span class="mn">1</span><span class="mt"><b>Marco normativo</b><small>Propósito, origen, DS N°8 y RIC N°17, alcance</small></span><span class="mm">30 min</span></button>
+    <button type="button" class="mod-row" data-go="5"><span class="mn">2</span><span class="mt"><b>Riesgos y arco eléctrico</b><small>Choque y arco, falla por arco, efectos y causas</small></span><span class="mm">35 min</span></button>
+    <button type="button" class="mod-row" data-go="10"><span class="mn">3</span><span class="mt"><b>Estudio de Arc Flash</b><small>Variables, método IEEE 1584, ejemplo y calculadora</small></span><span class="mm">85 min</span></button>
+    <button type="button" class="mod-row" data-go="15"><span class="mn">4</span><span class="mt"><b>Mitigación y EPP</b><small>Lesiones, categorías de EPP, jerarquía de controles</small></span><span class="mm">35 min</span></button>
+    <button type="button" class="mod-row" data-go="19"><span class="mn">✓</span><span class="mt"><b>Evaluación final y cierre</b><small>15 preguntas, 2 intentos, constancia</small></span><span class="mm">50 min</span></button>
+  </div>
+  <h2 class="sec-title" id="ficha">Ficha del curso</h2>
+  <div class="facts">
+    <div><small>Modalidad</small><b>E-learning asincrónico</b></div>
+    <div><small>Duración referencial</small><b id="cfgHoras">4 horas</b></div>
+    <div><small>Módulos</small><b>4 + evaluación final</b></div>
+    <div><small>Aprobación</small><b>Nota 4,0 (60%)</b></div>
+  </div>
+  <p class="localnote" id="localNote" hidden>Tu avance y tu nota se guardan en este navegador y en este dispositivo. Si cambias de equipo o borras los datos del navegador, el curso parte de cero.</p>
+  <h3>Objetivo general</h3>
+  <p>Aplicar los requisitos de la norma NFPA 70E para identificar y controlar el riesgo de arco eléctrico en intervenciones sobre sistemas eléctricos, seleccionando las medidas de protección según la energía incidente estimada.</p>
+  <h3>Objetivos específicos</h3>
+  <ol>
+    <li>Explicar el propósito y alcance de la NFPA 70E y su relación con la normativa eléctrica chilena (DS N°8 y pliego RIC N°17).</li>
+    <li>Distinguir el choque eléctrico del arco eléctrico, describiendo cómo se origina un arco y sus efectos.</li>
+    <li>Calcular la corriente de arco, la energía incidente y el límite de arco con el método IEEE 1584 en un caso práctico.</li>
+    <li>Seleccionar el equipo de protección personal según la energía incidente y la jerarquía de controles.</li>
+  </ol>
+  <h3>Cómo funciona este curso</h3>
+  <ul>
+    <li>Recorre las lecciones en orden con los botones <b>Siguiente</b> y <b>Anterior</b>, o salta desde el índice.</li>
+    <li>Cada módulo termina con una <b>autoevaluación</b> sin nota, para que compruebes lo aprendido.</li>
+    <li>La <b>evaluación final</b> se habilita al revisar todas las lecciones. Tienes <b id="cfgIntentos">2</b> intentos y apruebas con nota 4,0 (escala 1,0 a 7,0, exigencia 60%).</li>
+    <li>Ten a mano una calculadora científica para el Módulo 3; el curso también incluye una calculadora interactiva.</li>
+  </ul>
+</section>
+
+<!-- ================= MÓDULO 1 ================= -->
+<section class="lesson" data-mod="Módulo 1 · Marco normativo" data-title="Propósito de la NFPA 70E">
+  <header><span class="eyebrow">Módulo 1 · Lección 1</span><h2>Propósito de la NFPA 70E</h2></header>
+  <p>La NFPA 70E es la norma estadounidense sobre <b>requisitos de seguridad eléctrica en lugares de trabajo</b>. Su propósito es proveer, de forma práctica, un área de trabajo segura frente a los riesgos derivados del uso de la electricidad, en particular la generación de <b>arcos eléctricos</b>.</p>
+  <div class="callout warn"><b class="k">Idea central</b><p>La primera opción siempre es trabajar sin tensión. Si en la intervención de un sistema eléctrico <b>no es posible desconectar la energía</b>, se debe aumentar el grado de protección del equipamiento corporal de las personas para que no expongan su cuerpo a niveles intolerables de <b>energía incidente calórica</b> si se produce una falla con arco.</p></div>
+  <p>La norma marca un antes y un después en la forma de intervenir los sistemas eléctricos, en especial los de alta potencia: ya no basta con “tener cuidado”; hay que estimar la energía que se liberaría en una falla y protegerse en consecuencia.</p>
+  <div class="duo">
+    <figure class="figure"><img loading="lazy" decoding="async" width="400" height="301" src="img/explosion.webp" alt="Explosión por arco eléctrico en una sala eléctrica, con proyección de chispas y metal fundido"><figcaption>Una falla con arco libera en milisegundos calor, luz, presión y metal fundido.</figcaption></figure>
+    <div class="card"><h4>¿Qué exige en la práctica?</h4><ul><li>Evaluar el riesgo antes de cada intervención.</li><li>Establecer una condición de trabajo eléctricamente segura siempre que sea posible.</li><li>Si se trabaja energizado, justificarlo, planificarlo y usar EPP acorde a la energía incidente.</li><li>Capacitar y calificar al personal.</li></ul></div>
+  </div>
+</section>
+
+<section class="lesson" data-mod="Módulo 1 · Marco normativo" data-title="Origen y marco normativo">
+  <header><span class="eyebrow">Módulo 1 · Lección 2</span><h2>Origen de la norma y normativa vigente en Chile</h2></header>
+  <h3>Un poco de historia</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Año</th><th>Hito</th></tr>
+    <tr><td class="num">1976</td><td>A solicitud de <b>OSHA</b> (Administración de Seguridad y Salud Ocupacional de EE.UU.) se crea el comité técnico de la NFPA 70E.</td></tr>
+    <tr><td class="num">1978</td><td>Se publica la primera edición de la norma.</td></tr>
+    <tr><td class="num">Hoy</td><td>La norma se revisa periódicamente (aproximadamente cada 3 años). Verifica siempre la edición vigente antes de aplicarla.</td></tr>
+  </table></div>
+  <h3>¿Y en Chile?</h3>
+  <p>La antigua norma <b>NCh Elec. 4/2003</b> fue reemplazada por el reglamento de seguridad de las instalaciones de consumo de energía eléctrica, aprobado por el <b>Decreto Supremo N°8</b> del Ministerio de Energía, que se complementa con <b>19 pliegos técnicos normativos RIC</b> fiscalizados por la SEC.</p>
+  <div class="card">
+    <span class="tag">RIC N°17 · Operación y mantenimiento</span>
+    <p>El pliego técnico <b>RIC N°17</b> regula la operación y mantenimiento de las instalaciones de consumo y hace referencia a la aplicación de la <b>NFPA 70E</b> en las intervenciones del personal electricista. Por eso, conocer esta norma es parte del cumplimiento normativo en Chile, no solo una buena práctica.</p>
+  </div>
+  <figure class="figure side"><img loading="lazy" decoding="async" width="728" height="909" src="img/ric17.webp" alt="Primera página del pliego técnico RIC N°17 de la SEC, Operación y mantenimiento"><figcaption>Pliego técnico normativo RIC N°17 de la SEC. En sus referencias normativas incluye la NFPA 70E, “Norma para la seguridad eléctrica en lugares de trabajo”.</figcaption></figure>
+  <div class="callout"><b class="k">Para recordar</b><p>NFPA 70E dice <b>cómo trabajar seguro</b> frente al riesgo eléctrico. El DS N°8 y los pliegos RIC dicen <b>qué deben cumplir</b> las instalaciones en Chile, y el RIC N°17 conecta ambos mundos en la operación y el mantenimiento.</p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 1 · Marco normativo" data-title="Alcance y cobertura">
+  <header><span class="eyebrow">Módulo 1 · Lección 3</span><h2>Alcance y cobertura de la norma</h2></header>
+  <p>La NFPA 70E trata las <b>prácticas de trabajo</b> relacionadas con la seguridad eléctrica, los <b>requisitos de mantenimiento</b> vinculados a la seguridad y otros <b>controles administrativos</b> necesarios para proteger a los trabajadores durante actividades como:</p>
+  <figure class="figure side"><img loading="lazy" decoding="async" width="258" height="205" src="img/epp-traje.webp" class="native" alt="Trabajador con traje de protección contra arco inspeccionando un tablero, con el área delimitada por conos y cinta"><figcaption>Inspección de un tablero energizado: área delimitada y trabajador con EPP de arco. Es una actividad cubierta por la NFPA 70E.</figcaption></figure>
+  <div class="flips">
+    <button class="flip" type="button"><span class="front">Instalación</span><span class="back">Montaje y conexión de conductores y equipos eléctricos nuevos.</span><span class="hint">Toca para ver un ejemplo</span></button>
+    <button class="flip" type="button"><span class="front">Inspección</span><span class="back">Revisión visual o termográfica de tableros con las puertas abiertas.</span><span class="hint">Toca para ver un ejemplo</span></button>
+    <button class="flip" type="button"><span class="front">Operación</span><span class="back">Maniobrar interruptores, seccionadores o insertar y extraer interruptores.</span><span class="hint">Toca para ver un ejemplo</span></button>
+    <button class="flip" type="button"><span class="front">Mantenimiento</span><span class="back">Reapriete de conexiones, limpieza, cambio de componentes y pruebas.</span><span class="hint">Toca para ver un ejemplo</span></button>
+    <button class="flip" type="button"><span class="front">Desmantelamiento</span><span class="back">Retiro de equipos y conductores al término de su vida útil.</span><span class="hint">Toca para ver un ejemplo</span></button>
+  </div>
+  <h3>Actividad: ¿está dentro del alcance?</h3>
+  <p class="muted">Indica si cada situación corresponde a una actividad cubierta por la NFPA 70E.</p>
+  <div class="sorter">
+    <div class="row" data-ans="si"><span>Un electricista mide tensión en los bornes de un tablero energizado.</span><div class="choices"><button class="btn sm" data-v="si">Cubierta</button><button class="btn sm" data-v="no">No cubierta</button></div></div>
+    <div class="row" data-ans="si"><span>Una cuadrilla retira un transformador fuera de servicio.</span><div class="choices"><button class="btn sm" data-v="si">Cubierta</button><button class="btn sm" data-v="no">No cubierta</button></div></div>
+    <div class="row" data-ans="no"><span>El área de compras negocia el precio de un lote de cables.</span><div class="choices"><button class="btn sm" data-v="si">Cubierta</button><button class="btn sm" data-v="no">No cubierta</button></div></div>
+    <div class="row" data-ans="si"><span>Un operador abre un interruptor en un centro de control de motores.</span><div class="choices"><button class="btn sm" data-v="si">Cubierta</button><button class="btn sm" data-v="no">No cubierta</button></div></div>
+    <p class="fb" hidden></p>
+  </div>
+</section>
+
+<section class="lesson" data-mod="Módulo 1 · Marco normativo" data-title="Autoevaluación módulo 1" data-quiz="m1">
+  <header><span class="eyebrow">Módulo 1 · Autoevaluación</span><h2>Comprueba lo aprendido</h2></header>
+  <p class="muted">Estas preguntas no tienen nota. Recibirás retroalimentación inmediata.</p>
+  <div class="kc" data-correct="2"><p class="q">1. Si no es posible desconectar la energía para intervenir un equipo, la NFPA 70E indica que se debe:</p><div class="opts">
+    <button class="opt" data-fb="Trabajar más rápido no reduce la energía liberada por un arco.">Trabajar más rápido para reducir el tiempo de exposición.</button>
+    <button class="opt" data-fb="La norma no prohíbe en todos los casos el trabajo energizado, pero exige justificarlo y protegerse.">Suspender el trabajo en todos los casos.</button>
+    <button class="opt" data-fb="Correcto. Se aumenta el grado de protección del cuerpo según la energía incidente.">Aumentar el grado de protección del equipamiento corporal según la energía incidente.</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="0"><p class="q">2. ¿Qué pliego técnico chileno hace referencia a la NFPA 70E para el trabajo del personal electricista?</p><div class="opts">
+    <button class="opt" data-fb="Correcto. El RIC N°17 trata la operación y el mantenimiento.">RIC N°17, Operación y mantenimiento.</button>
+    <button class="opt" data-fb="La NCh Elec. 4/2003 fue reemplazada por el DS N°8 y sus pliegos RIC.">NCh Elec. 4/2003.</button>
+    <button class="opt" data-fb="No. Revisa la lección 2 del módulo.">RIC N°1, Empalmes.</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="1"><p class="q">3. ¿Qué organismo solicitó la creación del comité de la NFPA 70E en 1976?</p><div class="opts">
+    <button class="opt" data-fb="No. La SEC es el fiscalizador chileno.">SEC</button>
+    <button class="opt" data-fb="Correcto. OSHA solicitó su creación y la primera edición se publicó en 1978.">OSHA</button>
+    <button class="opt" data-fb="No. IEEE desarrolla la norma 1584 de cálculo de arco, pero no creó la NFPA 70E.">IEEE</button></div><p class="fb" hidden></p></div>
+</section>
+
+<!-- ================= MÓDULO 2 ================= -->
+<section class="lesson" data-mod="Módulo 2 · Riesgos y arco eléctrico" data-title="Riesgos en sistemas eléctricos">
+  <header><span class="eyebrow">Módulo 2 · Lección 1</span><h2>Riesgos en sistemas eléctricos</h2></header>
+  <p>Los accidentes de origen eléctrico se agrupan en dos grandes tipos. Ambos pueden ocurrir en la misma intervención, por eso la NFPA 70E exige evaluar los dos.</p>
+  <div class="duo">
+    <div class="card"><img loading="lazy" decoding="async" width="300" height="215" src="img/choque.webp" alt="Persona recibiendo una descarga al tocar un tablero" style="border-radius:var(--r)"><h4>Choque eléctrico (electrocución)</h4><p>La corriente circula <b>a través del cuerpo</b> al tocar partes energizadas. Produce paro cardíaco, quemaduras internas y caídas.</p></div>
+    <div class="card"><img loading="lazy" decoding="async" width="400" height="400" src="img/arco.webp" alt="Destello de arco eléctrico frente a un trabajador" style="border-radius:var(--r);aspect-ratio:300/215;object-fit:cover"><h4>Arco eléctrico (Arc Flash)</h4><p>La corriente circula <b>a través del aire</b> entre conductores. Libera energía calórica, luz intensa y una onda de presión que alcanzan a la persona <b>sin necesidad de contacto</b>.</p></div>
+  </div>
+  <div class="callout"><b class="k">Clave</b><p>Contra el choque eléctrico protegen el aislamiento y las distancias. Contra el arco eléctrico protegen la <b>reducción de la energía incidente</b>, la distancia y el EPP con clasificación de arco.</p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 2 · Riesgos y arco eléctrico" data-title="¿Qué es un arco eléctrico?">
+  <header><span class="eyebrow">Módulo 2 · Lección 2</span><h2>¿Qué es un arco eléctrico?</h2></header>
+  <p>Es una <b>descarga disruptiva</b> en la que la corriente consigue atravesar por completo el aislante (el aire) que separa dos conductores de diferente potencial. El circuito se cierra a través del aire y circula la <b>corriente de arco</b>. El arco se manifiesta como una columna gaseosa incandescente, el <b>plasma</b>, con una trayectoria aproximadamente rectilínea entre los electrodos.</p>
+  <div class="gallery">
+    <figure class="figure"><img loading="lazy" decoding="async" width="180" height="180" src="img/arco-cables.webp" class="native" alt="Arco eléctrico entre dos cables pelados"><figcaption>Arco entre dos conductores: la corriente atraviesa el aire.</figcaption></figure>
+    <figure class="figure"><img loading="lazy" decoding="async" width="173" height="150" src="img/plasma.webp" class="native" alt="Columna de plasma incandescente entre dos electrodos"><figcaption>El plasma: columna de gas incandescente entre electrodos.</figcaption></figure>
+  </div>
+  <h3>Falla sólida y falla por arco</h3>
+  <div class="svgwrap" role="img" aria-label="Comparación entre una falla sólida, donde una barra metálica une las fases A y B, y una falla por arco, donde el plasma une las fases a través del aire">
+    <svg viewBox="0 0 640 260">
+      <defs><radialGradient id="glow"><stop offset="0" stop-color="#fff6c2"/><stop offset=".5" stop-color="#ffb347" stop-opacity=".8"/><stop offset="1" stop-color="#ff6a00" stop-opacity="0"/></radialGradient></defs>
+      <text x="160" y="24" text-anchor="middle" font-size="20" font-weight="700">Falla sólida</text>
+      <rect class="bus" x="100" y="40" width="22" height="180" rx="4"/><rect class="bus" x="198" y="40" width="22" height="180" rx="4"/>
+      <rect x="122" y="112" width="76" height="16" fill="#6b7280"/>
+      <text x="111" y="246" text-anchor="middle" font-size="18" font-weight="700">A</text><text x="209" y="246" text-anchor="middle" font-size="18" font-weight="700">B</text>
+      <text x="480" y="24" text-anchor="middle" font-size="20" font-weight="700">Falla por arco</text>
+      <rect class="bus" x="420" y="40" width="22" height="180" rx="4"/><rect class="bus" x="518" y="40" width="22" height="180" rx="4"/>
+      <ellipse cx="480" cy="120" rx="58" ry="34" fill="url(#glow)"/>
+      <polyline points="442,120 456,108 466,128 478,110 490,130 502,112 518,120" fill="none" stroke="#fffbe0" stroke-width="4"/>
+      <text x="431" y="246" text-anchor="middle" font-size="18" font-weight="700">A</text><text x="529" y="246" text-anchor="middle" font-size="18" font-weight="700">B</text>
+      <text x="160" y="160" text-anchor="middle" font-size="14">unión metálica</text>
+      <text x="480" y="176" text-anchor="middle" font-size="14">plasma a través del aire</text>
+    </svg>
+  </div>
+  <div class="duo">
+    <div class="card"><h4>Falla sólida</h4><p>Un elemento metálico une las fases. La corriente de cortocircuito es máxima (I<sub>bf</sub>), pero la energía se disipa en su mayor parte en los conductores.</p></div>
+    <div class="card"><h4>Falla por arco</h4><p>El aire ionizado tiene impedancia, por lo que la corriente de arco (I<sub>a</sub>) es <b>menor</b> que I<sub>bf</sub>. Esa menor corriente puede retrasar la operación de la protección y la energía se libera hacia el ambiente como calor y presión.</p></div>
+  </div>
+</section>
+
+<section class="lesson" data-mod="Módulo 2 · Riesgos y arco eléctrico" data-title="Efectos del arco eléctrico">
+  <header><span class="eyebrow">Módulo 2 · Lección 3</span><h2>Efectos del arco eléctrico</h2></header>
+  <p>En pocos milisegundos, un arco eléctrico genera simultáneamente los siguientes peligros. Los valores son referencias citadas habitualmente en la literatura de seguridad eléctrica.</p>
+  <figure class="figure side"><img loading="lazy" decoding="async" width="335" height="567" src="img/arco-flash.webp" alt="Bola de fuego de un arco eléctrico saliendo de un gabinete"><figcaption>Bola de fuego de un arco eléctrico. El calor, la presión y el metal fundido alcanzan a quien esté frente al equipo, aunque no lo toque.</figcaption></figure>
+  <div class="effects">
+    <div class="effect"><b>≈ 19.400 °C</b><span>Temperatura en el punto de arco, varias veces la de la superficie del sol.</span></div>
+    <div class="effect"><b>67.000 ×</b><span>Expansión del cobre al pasar de sólido a vapor.</span></div>
+    <div class="effect"><b>&gt; 982 °C</b><span>Metal derretido proyectado.</span></div>
+    <div class="effect"><b>&gt; 1.100 km/h</b><span>Velocidad de esquirlas y fragmentos.</span></div>
+    <div class="effect"><b>&gt; 140 dB</b><span>Onda sonora capaz de dañar los oídos.</span></div>
+    <div class="effect"><b>&gt; 260 °C</b><span>Aire caliente que puede inhalarse.</span></div>
+    <div class="effect"><b>Onda de presión</b><span>Puede derribar o proyectar a la persona.</span></div>
+    <div class="effect"><b>Luz intensa</b><span>Radiación ultravioleta que daña la vista.</span></div>
+  </div>
+  <div class="callout warn"><b class="k">Consecuencia</b><p>Casi siempre se producen <b>quemaduras de segundo y tercer grado</b>. La ropa común de algodón o sintética puede encenderse o derretirse sobre la piel y agravar las lesiones.</p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 2 · Riesgos y arco eléctrico" data-title="¿Cómo se produce un arco?">
+  <header><span class="eyebrow">Módulo 2 · Lección 4</span><h2>¿Cómo se produce un arco eléctrico?</h2></header>
+  <div class="flips">
+    <button class="flip" type="button"><span class="front">Contactos accidentales</span><span class="back">El contacto accidental con partes expuestas energizadas, por ejemplo con una punta de prueba o un cable suelto, puede iniciar el arco.</span><span class="hint">Toca para ver la explicación</span></button>
+    <button class="flip" type="button"><span class="front">Caída de herramientas</span><span class="back">Una herramienta que cae entre fases provoca un cortocircuito momentáneo, produce chispas e inicia el arco.</span><span class="hint">Toca para ver la explicación</span></button>
+    <button class="flip" type="button"><span class="front">Sobretensiones en espacios estrechos</span><span class="back">Si la distancia entre fases se reduce por mala calidad o daño de los conductores, el arco puede ocurrir durante sobretensiones temporales.</span><span class="hint">Toca para ver la explicación</span></button>
+  </div>
+  <figure class="figure side"><img loading="lazy" decoding="async" width="475" height="406" src="img/fuentes-arco.webp" alt="Ilustración de un arco en un tablero que proyecta calor, gases, esquirlas y sonido hacia un trabajador" style="background:#fff"><figcaption>Cuando el arco se inicia, el trabajador recibe calor, gases calientes, esquirlas y la onda sonora, todo al mismo tiempo.</figcaption></figure>
+  <p>Otras condiciones que favorecen el arco son el polvo conductor, la humedad, la corrosión, las conexiones sueltas y el aislamiento deteriorado. Muchas se detectan con un buen programa de mantenimiento.</p>
+  <h3>Caso para analizar</h3>
+  <div class="kc" data-correct="1"><p class="q">Durante una mantención, un electricista apoya un destornillador sin aislar sobre las barras superiores de un interruptor energizado. El destornillador resbala y toca dos fases. ¿Qué causa de arco se presenta?</p><div class="opts">
+    <button class="opt" data-fb="No hay indicio de sobretensión ni de daño en la aislación.">Sobretensión a través de un espacio estrecho.</button>
+    <button class="opt" data-fb="Correcto. La herramienta une dos fases y provoca un cortocircuito momentáneo que inicia el arco.">Caída de herramienta que provoca un cortocircuito momentáneo.</button>
+    <button class="opt" data-fb="El destornillador no es una parte del sistema eléctrico. La causa es la herramienta.">Falla de aislamiento por envejecimiento.</button></div><p class="fb" hidden></p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 2 · Riesgos y arco eléctrico" data-title="Autoevaluación módulo 2" data-quiz="m2">
+  <header><span class="eyebrow">Módulo 2 · Autoevaluación</span><h2>Comprueba lo aprendido</h2></header>
+  <div class="kc" data-correct="0"><p class="q">1. ¿Cuál es la principal diferencia entre el choque eléctrico y el arco eléctrico?</p><div class="opts">
+    <button class="opt" data-fb="Correcto. El arco daña sin contacto, por calor, luz y presión.">En el arco la corriente circula por el aire y puede dañar sin contacto directo.</button>
+    <button class="opt" data-fb="No. El choque eléctrico puede ocurrir en baja tensión.">El choque solo ocurre en alta tensión.</button>
+    <button class="opt" data-fb="No. El arco eléctrico causa lesiones graves, principalmente quemaduras.">El arco no produce lesiones si se usan guantes.</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="2"><p class="q">2. En una falla por arco, la corriente de arco I<sub>a</sub> comparada con la corriente de falla sólida I<sub>bf</sub> es:</p><div class="opts">
+    <button class="opt" data-fb="No. El plasma tiene impedancia.">Mayor.</button>
+    <button class="opt" data-fb="No. El plasma agrega impedancia al circuito.">Igual.</button>
+    <button class="opt" data-fb="Correcto. Por eso la protección puede demorar más en operar.">Menor, por la impedancia del plasma.</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="1"><p class="q">3. ¿Qué tipo de lesión se produce casi siempre en un accidente por arco eléctrico?</p><div class="opts">
+    <button class="opt" data-fb="No es la lesión característica.">Fracturas por caídas.</button>
+    <button class="opt" data-fb="Correcto.">Quemaduras de segundo y tercer grado.</button>
+    <button class="opt" data-fb="No es la lesión característica.">Intoxicación por gases.</button></div><p class="fb" hidden></p></div>
+</section>
+
+<!-- ================= MÓDULO 3 ================= -->
+<section class="lesson" data-mod="Módulo 3 · Estudio de Arc Flash" data-title="Variables del estudio de Arc Flash">
+  <header><span class="eyebrow">Módulo 3 · Lección 1</span><h2>Variables del estudio de Arc Flash</h2></header>
+  <p>El análisis de Arc Flash se relaciona con tres variables: la <b>corriente de arco</b>, que depende de la corriente de cortocircuito; el <b>tiempo de operación de la protección</b> que despeja la falla; y la <b>distancia</b> entre el arco y la persona. Juntas determinan la gravedad de las lesiones.</p>
+  <div class="formula" style="font-family:var(--f-display);font-size:1.25rem">I<sub>a</sub> = f(I<sub>cc</sub>) &nbsp;+&nbsp; t (operación de la protección) &nbsp;+&nbsp; D (distancia) &nbsp;⇒&nbsp; gravedad de las lesiones</div>
+  <figure class="figure side"><img loading="lazy" decoding="async" width="289" height="400" src="img/curva-bcd.webp" alt="Curvas de disparo tiempo-corriente B, C y D de interruptores termomagnéticos" style="background:#fff;padding:6px"><figcaption>Curvas tiempo-corriente de interruptores termomagnéticos (B, C y D). De ellas se lee el tiempo t que demora la protección en despejar la corriente de arco: en la zona instantánea son centésimas de segundo; en la zona térmica, segundos o minutos.</figcaption></figure>
+  <p>Por eso el estudio de Arc Flash se apoya en dos estudios previos: el de <b>cortocircuito</b> y el de <b>coordinación de protecciones</b>. Con sus resultados se obtienen la energía incidente a la distancia de trabajo, el <b>límite de arco</b> y el EPP requerido. El cálculo debe hacerlo personal calificado, consciente de las limitaciones del método, según <b>NFPA 70E</b> e <b>IEEE 1584</b>.</p>
+  <h3>Simulador: tiempo y distancia</h3>
+  <p class="muted">Con la misma corriente de arco del ejemplo del curso (I<sub>a</sub> ≈ 5,8 kA, tablero de 380 V), mueve los controles y observa cómo cambia la energía incidente.</p>
+  <div class="sim" id="sim">
+    <label for="simT">Tiempo de despeje de la protección: <span class="val" id="simTv">0,02 s</span><input type="range" id="simT" min="0.02" max="1" step="0.01" value="0.02"></label>
+    <label for="simD">Distancia de trabajo: <span class="val" id="simDv">455 mm</span><input type="range" id="simD" min="100" max="1200" step="5" value="455"></label>
+    <div class="results"><div><small>Energía incidente</small><b id="simE">–</b></div><div><small>EPP mínimo</small><b id="simP" style="font-family:var(--f-display)">–</b></div></div>
+    <svg class="chart" id="simChart" viewBox="0 0 440 300" role="img" aria-label="Gráfico de energía incidente según la distancia de trabajo"></svg>
+    <p class="muted" style="font-size:.9rem">La curva muestra la energía incidente según la distancia, para el tiempo elegido. Escala vertical logarítmica. Cada franja es una categoría de EPP; el punto naranja es tu distancia.</p>
+  </div>
+  <div class="callout"><b class="k">Conclusión</b><p>Con la misma corriente de arco, mientras <b>más se demora</b> la protección en operar, <b>mayor</b> es la energía liberada. Y mientras <b>más lejos</b> está la persona, <b>menor</b> es la energía que recibe, porque la energía disminuye con la distancia elevada a un exponente.</p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 3 · Estudio de Arc Flash" data-title="Método de cálculo IEEE 1584">
+  <header><span class="eyebrow">Módulo 3 · Lección 2</span><h2>Método de cálculo IEEE 1584</h2></header>
+  <p>Este curso usa las ecuaciones de la edición 2002 de la norma <b>IEEE 1584</b>, que son las más usadas para enseñar el método. En el lenguaje de las fórmulas, <i>lg</i> es el logaritmo en base 10.</p>
+  <div class="callout"><b class="k">Importante</b><p>La edición vigente, IEEE 1584-2018, introdujo un modelo más complejo que considera la configuración de electrodos y el tamaño del gabinete. Los estudios reales se realizan con software especializado y por personal calificado. Lo que aprendes aquí es la lógica del cálculo.</p></div>
+
+  <figure class="figure side"><img loading="lazy" decoding="async" width="667" height="610" src="img/software.webp" alt="Software de estudio de Arc Flash con diagrama unilineal y curvas de coordinación, junto a un trabajador con traje de arco" style="background:#fff"><figcaption>En la práctica, el estudio se hace con software que integra el diagrama unilineal, el cortocircuito y las curvas de coordinación de protecciones.</figcaption></figure>
+  <h3>1. Corriente de arco I<sub>a</sub></h3>
+  <p><b>Tensiones de hasta 1 kV:</b></p>
+  <div class="formula"><var>lg I<sub>a</sub></var> = <var>K</var> + 0,662 <var>lg I<sub>bf</sub></var> + 0,0966 <var>V</var> + 0,000526 <var>G</var> + 0,5588 <var>V</var> (<var>lg I<sub>bf</sub></var>) − 0,00304 <var>G</var> (<var>lg I<sub>bf</sub></var>)</div>
+  <p><b>Tensiones superiores a 1 kV:</b></p>
+  <div class="formula"><var>lg I<sub>a</sub></var> = 0,00402 + 0,983 <var>lg I<sub>bf</sub></var></div>
+  <dl class="vars">
+    <dt>I<sub>a</sub></dt><dd>Corriente de arco, en kA. Se obtiene como I<sub>a</sub> = 10<sup>lg I<sub>a</sub></sup>.</dd>
+    <dt>K</dt><dd>−0,153 para arcos al aire libre; −0,097 para arcos en una caja (equipo cerrado).</dd>
+    <dt>I<sub>bf</sub></dt><dd>Corriente de cortocircuito trifásica sólida simétrica, en kA.</dd>
+    <dt>V</dt><dd>Tensión del sistema, en <b>kV</b> (380 V = 0,38 kV).</dd>
+    <dt>G</dt><dd>Separación entre conductores, en mm, según el tipo de equipo.</dd>
+  </dl>
+
+  <h3>2. Energía incidente normalizada E<sub>n</sub></h3>
+  <p>Está normalizada para un arco de <b>0,2 s</b> de duración y una distancia de <b>610 mm</b> entre el punto de arco y la persona.</p>
+  <div class="formula"><var>lg E<sub>n</sub></var> = <var>K<sub>1</sub></var> + <var>K<sub>2</sub></var> + 1,081 <var>lg I<sub>a</sub></var> + 0,0011 <var>G</var> &nbsp;&nbsp;⇒&nbsp;&nbsp; <var>E<sub>n</sub></var> = 10<sup><var>lg E<sub>n</sub></var></sup></div>
+  <dl class="vars">
+    <dt>E<sub>n</sub></dt><dd>Energía incidente normalizada, en J/cm².</dd>
+    <dt>K<sub>1</sub></dt><dd>−0,792 para configuración abierta (sin gabinete); −0,555 para configuración en caja (equipo cerrado).</dd>
+    <dt>K<sub>2</sub></dt><dd>0 para sistemas no aterrizados o aterrizados con alta resistencia; −0,113 para sistemas aterrizados.</dd>
+  </dl>
+
+  <h3>3. Energía incidente E</h3>
+  <div class="formula"><var>E</var> = 4,184 · <var>C<sub>f</sub></var> · <var>E<sub>n</sub></var> · (<var>t</var> / 0,2) · (610<sup><var>x</var></sup> / <var>D</var><sup><var>x</var></sup>)</div>
+  <dl class="vars">
+    <dt>E</dt><dd>Energía incidente, en J/cm². Para pasar a cal/cm² se divide por 4,184.</dd>
+    <dt>C<sub>f</sub></dt><dd>Factor de cálculo: 1,5 para tensiones de 1 kV o menos; 1,0 para tensiones mayores a 1 kV.</dd>
+    <dt>t</dt><dd>Duración del arco (tiempo de despeje de la protección), en segundos.</dd>
+    <dt>D</dt><dd>Distancia desde el posible punto de arco hasta la persona, en mm.</dd>
+    <dt>x</dt><dd>Exponente de distancia, según el tipo de equipo.</dd>
+  </dl>
+
+  <h3>4. Límite de arco D<sub>B</sub></h3>
+  <p>Es la distancia a la que la energía incidente baja a <b>5 J/cm² (1,2 cal/cm²)</b>, el umbral de una quemadura de segundo grado en piel desnuda.</p>
+  <div class="formula"><var>D<sub>B</sub></var> = [ 4,184 · <var>C<sub>f</sub></var> · <var>E<sub>n</sub></var> · (<var>t</var> / 0,2) · (610<sup><var>x</var></sup> / <var>E<sub>B</sub></var>) ]<sup>1/<var>x</var></sup></div>
+
+  <h3>Parámetros típicos por tipo de equipo (IEEE 1584-2002, baja tensión)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Equipo</th><th>Separación G (mm)</th><th>Exponente x</th><th>Distancia de trabajo típica</th></tr>
+    <tr><td>Aire libre</td><td class="num">10 – 40</td><td class="num">2,000</td><td>—</td></tr>
+    <tr><td>Celdas / switchgear</td><td class="num">32</td><td class="num">1,473</td><td class="num">610 mm</td></tr>
+    <tr><td>CCM y tableros</td><td class="num">25</td><td class="num">1,641</td><td class="num">455 mm</td></tr>
+    <tr><td>Cables</td><td class="num">13</td><td class="num">2,000</td><td class="num">455 mm</td></tr>
+  </table></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 3 · Estudio de Arc Flash" data-title="Ejemplo práctico paso a paso">
+  <header><span class="eyebrow">Módulo 3 · Lección 3</span><h2>Ejemplo práctico paso a paso</h2></header>
+  <p>Una subestación de <b>300 kVA, 23/0,4 kV</b> alimenta un sistema eléctrico industrial. La placa del transformador indica una impedancia de <b>4,2%</b>. Durante una mantención, un electricista provoca accidentalmente un cortocircuito con arco en los <b>bornes superiores de la protección</b> aguas abajo del transformador.</p>
+  <div class="duo">
+    <figure class="figure"><img loading="lazy" decoding="async" width="677" height="507" src="img/subestacion.webp" alt="Subestación compacta dentro de un cierre perimetral"><figcaption>Subestación de 300 kVA.</figcaption></figure>
+    <figure class="figure"><img loading="lazy" decoding="async" width="1100" height="825" src="img/tablero.webp" alt="Bornes superiores del interruptor general en el tablero"><figcaption>Punto de falla: bornes superiores del interruptor.</figcaption></figure>
+  </div>
+  <div class="gallery">
+    <figure class="figure"><img loading="lazy" decoding="async" width="619" height="1100" src="img/placa.webp" alt="Placa de características del transformador"><figcaption>Placa del transformador: potencia, tensiones e impedancia (4,2%).</figcaption></figure>
+    <figure class="figure"><img loading="lazy" decoding="async" width="825" height="1100" src="img/interruptor.webp" alt="Interruptor general de caja moldeada de 500 A"><figcaption>Interruptor general de caja moldeada que protege la salida del transformador.</figcaption></figure>
+    <figure class="figure"><img loading="lazy" decoding="async" width="763" height="897" src="img/curva.webp" alt="Curva de operación tiempo-corriente del interruptor" style="background:#fff;object-fit:contain"><figcaption>Curva de operación del interruptor: con la corriente de arco opera en su zona instantánea, en unos 0,02 s.</figcaption></figure>
+  </div>
+  <p><b>Determinar:</b> la corriente de arco I<sub>a</sub>, la energía incidente E y el grado de protección requerido. Datos adicionales: tensión 380 V, equipo en caja (K = −0,097; K<sub>1</sub> = −0,555), sistema aterrizado (K<sub>2</sub> = −0,113), G = 32 mm, x = 1,641, tiempo de despeje del interruptor t = 0,02 s (zona instantánea de su curva) y distancia D = 100 mm (las manos del trabajador en los bornes).</p>
+  <div id="steps" style="display:flex;flex-direction:column;gap:14px">
+    <div class="step"><span class="n">Paso 1 · Corriente nominal del transformador</span>
+      <div class="calcline">I<sub>n</sub> = S / (√3 · V) = 300.000 / (1,732 · 380)</div>
+      <p class="ans">I<sub>n</sub> ≈ 456 A</p></div>
+    <div class="step" hidden><span class="n">Paso 2 · Corriente de cortocircuito</span>
+      <p>Se considera la impedancia del transformador en por unidad (4,2% = 0,042):</p>
+      <div class="calcline">I<sub>bf</sub> = I<sub>n</sub> / Z<sub>pu</sub> = 456 / 0,042</div>
+      <p class="ans">I<sub>bf</sub> ≈ 10,85 kA</p></div>
+    <div class="step" hidden><span class="n">Paso 3 · Corriente de arco (V ≤ 1 kV)</span>
+      <p>Ojo con las unidades: V va en kV (0,38) y lg 10,85 = 1,0355.</p>
+      <div class="calcline">lg I<sub>a</sub> = −0,097 + 0,662·1,0355 + 0,0966·0,38 + 0,000526·32
+         + 0,5588·0,38·1,0355 − 0,00304·32·1,0355
+lg I<sub>a</sub> = 0,7612</div>
+      <p class="ans">I<sub>a</sub> = 10<sup>0,7612</sup> ≈ 5,77 kA</p>
+      <p class="muted">La corriente de arco es casi la mitad de la corriente de falla sólida.</p></div>
+    <div class="step" hidden><span class="n">Paso 4 · Energía incidente normalizada</span>
+      <div class="calcline">lg E<sub>n</sub> = −0,555 − 0,113 + 1,081·lg 5,77 + 0,0011·32 = 0,1901</div>
+      <p class="ans">E<sub>n</sub> = 10<sup>0,1901</sup> ≈ 1,55 J/cm²</p></div>
+    <div class="step" hidden><span class="n">Paso 5 · Energía incidente a 100 mm</span>
+      <div class="calcline">E = 4,184 · 1,5 · 1,55 · (0,02 / 0,2) · (610 / 100)^1,641
+E = 0,973 · 19,43</div>
+      <p class="ans">E ≈ 18,9 J/cm² = 18,9 / 4,184 ≈ 4,5 cal/cm²</p></div>
+    <div class="step" hidden><span class="n">Paso 6 · Límite de arco</span>
+      <div class="calcline">D<sub>B</sub> = [ 4,184 · 1,5 · 1,55 · (0,02 / 0,2) · (610^1,641 / 5) ]^(1/1,641)</div>
+      <p class="ans">D<sub>B</sub> ≈ 225 mm</p>
+      <p>Toda persona a menos de 225 mm del punto de arco necesita EPP con clasificación de arco.</p></div>
+    <div class="step" hidden><span class="n">Paso 7 · Interpretación y EPP</span>
+      <p>La energía incidente a la que se expone el trabajador es <b>4,5 cal/cm²</b>. La ropa y el protector facial deben tener una clasificación de arco (ATPV o EBT) <b>de al menos 4,5 cal/cm²</b>.</p>
+      <p>Un conjunto de <b>Categoría 1 (mínimo 4 cal/cm²) no alcanza</b>. Se debe usar EPP con clasificación de al menos 8 cal/cm², equivalente a <b>Categoría 2</b>.</p>
+      <div class="label-af" role="img" aria-label="Etiqueta de advertencia de arco eléctrico con los resultados del ejemplo">
+        <div class="hd"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 1 21h22L12 2z" fill="#111"/><path d="M12 8v6m0 3v1" stroke="#f47b20" stroke-width="2.4" stroke-linecap="round"/></svg>ADVERTENCIA</div>
+        <div class="sub">PELIGRO DE ARCO ELÉCTRICO Y CHOQUE</div>
+        <dl><dt>Tensión nominal</dt><dd>380 V</dd><dt>Energía incidente</dt><dd>4,5 cal/cm²</dd><dt>Distancia de trabajo</dt><dd>100 mm</dd><dt>Límite de arco</dt><dd>225 mm</dd><dt>EPP mínimo</dt><dd>≥ 8 cal/cm²</dd></dl>
+        <div class="ft">Tablero general BT · Subestación 300 kVA · Ejemplo de curso</div>
+      </div>
+    </div>
+    <button class="btn primary" id="nextStep" type="button" style="align-self:flex-start">Ver siguiente paso</button>
+  </div>
+  <div class="callout"><b class="k">Análisis de sensibilidad</b><p>Si el trabajador estuviera a la distancia de trabajo típica de un tablero, <b>455 mm</b>, la energía incidente bajaría a unos <b>0,38 cal/cm²</b>, por debajo del umbral de 1,2 cal/cm². La distancia es una de las barreras más eficaces. Compruébalo en la calculadora de la siguiente lección.</p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 3 · Estudio de Arc Flash" data-title="Calculadora de energía incidente">
+  <header><span class="eyebrow">Módulo 3 · Lección 4</span><h2>Calculadora de energía incidente</h2></header>
+  <p>La calculadora aplica las ecuaciones IEEE 1584-2002 a un transformador alimentando un tablero. Viene cargada con los datos del ejemplo. Cambia un valor a la vez y observa el efecto.</p>
+  <div class="sim">
+    <div class="grid-form">
+      <label for="cS">Potencia del transformador (kVA)<input id="cS" type="text" inputmode="decimal" autocomplete="off" value="300"></label>
+      <label for="cV">Tensión secundaria (V)<input id="cV" type="text" inputmode="decimal" autocomplete="off" value="380"></label>
+      <label for="cZ">Impedancia (%)<input id="cZ" type="text" inputmode="decimal" autocomplete="off" value="4,2"></label>
+      <label for="cT">Tiempo de despeje t (s)<input id="cT" type="text" inputmode="decimal" autocomplete="off" value="0,02"></label>
+      <label for="cD">Distancia de trabajo D (mm)<input id="cD" type="text" inputmode="decimal" autocomplete="off" value="100"></label>
+      <label for="cEq">Tipo de equipo<select id="cEq">
+        <option value="ej" selected>Ejemplo del curso (G 32, x 1,641)</option>
+        <option value="tab">CCM y tableros (G 25, x 1,641)</option>
+        <option value="sw">Celdas / switchgear (G 32, x 1,473)</option>
+        <option value="cab">Cables (G 13, x 2,000)</option>
+        <option value="air">Aire libre (G 25, x 2,000)</option></select></label>
+      <label for="cGr">Puesta a tierra<select id="cGr"><option value="g" selected>Sistema aterrizado</option><option value="u">No aterrizado / alta resistencia</option></select></label>
+    </div>
+    <div class="results">
+      <div><small>I<sub>bf</sub></small><b id="rIbf">–</b></div>
+      <div><small>I<sub>a</sub></small><b id="rIa">–</b></div>
+      <div><small>E</small><b id="rEJ">–</b></div>
+      <div><small>E</small><b id="rEc">–</b></div>
+      <div><small>Límite de arco</small><b id="rDB">–</b></div>
+    </div>
+    <div class="callout" id="rPPE"></div>
+  </div>
+  <p class="muted" style="font-size:.88rem">Herramienta educativa. Supone fuente infinita en el primario y no reemplaza un estudio de Arc Flash realizado por personal calificado con la edición vigente de IEEE 1584.</p>
+</section>
+
+<section class="lesson" data-mod="Módulo 3 · Estudio de Arc Flash" data-title="Autoevaluación módulo 3" data-quiz="m3">
+  <header><span class="eyebrow">Módulo 3 · Autoevaluación</span><h2>Comprueba lo aprendido</h2></header>
+  <div class="kc" data-correct="0"><p class="q">1. Con la misma corriente de arco, si la protección demora más en operar, la energía incidente:</p><div class="opts">
+    <button class="opt" data-fb="Correcto. E es proporcional a t.">Aumenta.</button>
+    <button class="opt" data-fb="No. Revisa la fórmula: E depende de t / 0,2.">Disminuye.</button>
+    <button class="opt" data-fb="No. El tiempo es una de las tres variables clave.">No cambia.</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="2"><p class="q">2. Un estudio entrega E = 33,5 J/cm². ¿Cuánto es en cal/cm²?</p><div class="opts">
+    <button class="opt" data-fb="No. Se divide por 4,184, no se multiplica.">140 cal/cm²</button>
+    <button class="opt" data-fb="No. Revisa el factor de conversión.">6,7 cal/cm²</button>
+    <button class="opt" data-fb="Correcto. 33,5 / 4,184 ≈ 8,0 cal/cm².">8,0 cal/cm²</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="1"><p class="q">3. El límite de arco es la distancia a la cual la energía incidente es igual a:</p><div class="opts">
+    <button class="opt" data-fb="No. 4 cal/cm² es el mínimo de la Categoría 1.">4 cal/cm²</button>
+    <button class="opt" data-fb="Correcto. 1,2 cal/cm² equivale a 5 J/cm².">1,2 cal/cm² (5 J/cm²)</button>
+    <button class="opt" data-fb="No. Ese valor produce quemaduras de tercer grado.">8 cal/cm²</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="0"><p class="q">4. ¿Qué estudios aportan los datos para un análisis de Arc Flash?</p><div class="opts">
+    <button class="opt" data-fb="Correcto.">Cortocircuito y coordinación de protecciones.</button>
+    <button class="opt" data-fb="No. Esos estudios no entregan corriente ni tiempo de despeje.">Iluminación y puesta a tierra.</button>
+    <button class="opt" data-fb="No. La calidad de energía no entrega los datos necesarios.">Armónicos y calidad de energía.</button></div><p class="fb" hidden></p></div>
+</section>
+
+<!-- ================= MÓDULO 4 ================= -->
+<section class="lesson" data-mod="Módulo 4 · Mitigación y EPP" data-title="Lesiones según energía incidente">
+  <header><span class="eyebrow">Módulo 4 · Lección 1</span><h2>Lesiones según la energía incidente</h2></header>
+  <p>Las lesiones sobre la piel son proporcionales a la magnitud de la energía incidente, a la distancia al arco y al tiempo de exposición. Esta escala ayuda a dimensionar las cifras.</p>
+  <div class="scale" id="scale">
+    <div class="r" data-v="0.0033"><b>0,0033</b><span class="track"><i></i></span><p>Energía del sol durante 0,1 s sobre el suelo en el ecuador.</p></div>
+    <div class="r" data-v="1"><b>1</b><span class="track"><i></i></span><p>La punta del dedo expuesta a la llama de un encendedor durante 1 segundo.</p></div>
+    <div class="r" data-v="1.2"><b>1,2</b><span class="track"><i></i></span><p>Quemadura instantánea de <b>segundo grado</b> en piel desnuda. Define el límite de arco.</p></div>
+    <div class="r" data-v="4"><b>4</b><span class="track"><i></i></span><p>Ignición instantánea de una <b>camisa de algodón</b>.</p></div>
+    <div class="r" data-v="8"><b>8</b><span class="track"><i></i></span><p>Quemadura incurable de <b>tercer grado</b>.</p></div>
+  </div>
+  <p class="muted" style="font-size:.85rem">Valores en cal/cm². Barras en escala logarítmica.</p>
+  <h3>Lesiones reales por arco eléctrico</h3>
+  <p class="muted">Las siguientes fotos muestran quemaduras reales. Están difuminadas; tócalas para verlas.</p>
+  <div class="gallery">
+    <figure class="figure"><div class="sens"><img loading="lazy" decoding="async" width="411" height="549" src="img/lesion1.webp" alt="Trabajador con quemaduras graves en rostro, cuello y tórax tras un arco eléctrico"><button type="button">Ver imagen sensible</button></div><figcaption>Quemaduras de segundo y tercer grado en rostro y tórax.</figcaption></figure>
+    <figure class="figure"><div class="sens"><img loading="lazy" decoding="async" width="946" height="524" src="img/lesion2.webp" alt="Espalda de un trabajador con extensas quemaduras"><button type="button">Ver imagen sensible</button></div><figcaption>Quemaduras extensas en la espalda de un trabajador.</figcaption></figure>
+    <figure class="figure"><div class="sens"><img loading="lazy" decoding="async" width="272" height="186" src="img/lesion3.webp" alt="Mano y antebrazo con quemaduras profundas"><button type="button">Ver imagen sensible</button></div><figcaption>Quemadura profunda en mano y antebrazo.</figcaption></figure>
+  </div>
+  <h3>¿Por qué hacer el análisis de Arc Flash?</h3>
+  <p>Permite estimar correctamente:</p>
+  <ul><li>La magnitud de la energía incidente E.</li><li>La distancia de protección (límite de arco).</li><li>La categoría y el tipo de protección personal.</li><li>Un EPP que <b>no esté sobredimensionado</b>: un traje más pesado de lo necesario reduce la movilidad, la visibilidad y la comodidad, y aumenta el estrés térmico.</li></ul>
+</section>
+
+<section class="lesson" data-mod="Módulo 4 · Mitigación y EPP" data-title="Categorías de EPP">
+  <header><span class="eyebrow">Módulo 4 · Lección 2</span><h2>Categorías de EPP para arco eléctrico</h2></header>
+  <p>La NFPA 70E define cuatro categorías de EPP. Cada una indica la <b>clasificación de arco mínima</b> de la ropa (ATPV o EBT, en cal/cm²). Toca cada categoría para ver sus elementos.</p>
+  <div class="flips">
+    <button class="flip" type="button"><span class="front">Categoría 1<br><span class="mono" style="font-size:1rem">≥ 4 cal/cm²</span></span><span class="back">Camisa manga larga y pantalón (u overol) con clasificación de arco; protector facial con clasificación de arco; casco; lentes de seguridad; protección auditiva; guantes de cuero de trabajo pesado; calzado de cuero.</span><span class="hint">Ver elementos</span></button>
+    <button class="flip" type="button"><span class="front">Categoría 2<br><span class="mono" style="font-size:1rem">≥ 8 cal/cm²</span></span><span class="back">Lo mismo que la Categoría 1 con ropa de 8 cal/cm², más pasamontañas (balaclava) con clasificación de arco junto al protector facial, o capucha de traje.</span><span class="hint">Ver elementos</span></button>
+    <button class="flip" type="button"><span class="front">Categoría 3<br><span class="mono" style="font-size:1rem">≥ 25 cal/cm²</span></span><span class="back">Traje completo con clasificación de arco: chaqueta, pantalón y capucha; guantes con clasificación de arco; casco; lentes; protección auditiva; calzado de cuero.</span><span class="hint">Ver elementos</span></button>
+    <button class="flip" type="button"><span class="front">Categoría 4<br><span class="mono" style="font-size:1rem">≥ 40 cal/cm²</span></span><span class="back">Traje completo de 40 cal/cm² con capucha, guantes con clasificación de arco y el resto de los elementos de la Categoría 3.</span><span class="hint">Ver elementos</span></button>
+  </div>
+  <figure class="figure"><img loading="lazy" decoding="async" width="430" height="302" src="img/epp-categorias.webp" alt="Cuatro trabajadores con EPP de arco de las categorías 1 a 4, desde camisa con clasificación de arco hasta traje completo con capucha" style="background:#fff"><figcaption>Categorías 1 a 4 de EPP para arco eléctrico, de la más liviana a la más pesada.</figcaption></figure>
+  <div class="tablewrap"><table>
+    <tr><th>Energía incidente estimada</th><th>EPP con clasificación de arco</th></tr>
+    <tr><td class="num">&lt; 1,2 cal/cm²</td><td>No requerido por arco; usar ropa de fibra natural que no se derrita y el EPP contra choque que corresponda.</td></tr>
+    <tr><td class="num">1,2 – 4 cal/cm²</td><td>Categoría 1 (4 cal/cm²)</td></tr>
+    <tr><td class="num">4 – 8 cal/cm²</td><td>Categoría 2 (8 cal/cm²)</td></tr>
+    <tr><td class="num">8 – 25 cal/cm²</td><td>Categoría 3 (25 cal/cm²)</td></tr>
+    <tr><td class="num">25 – 40 cal/cm²</td><td>Categoría 4 (40 cal/cm²)</td></tr>
+    <tr><td class="num">&gt; 40 cal/cm²</td><td>No existe categoría. Se debe desenergizar o reducir la energía incidente.</td></tr>
+  </table></div>
+  <div class="callout"><b class="k">Nota para quienes vienen de ediciones antiguas</b><p>Ediciones anteriores incluían una “Categoría 0” con ropa de algodón no tratado. Fue eliminada: hoy la categoría mínima es la 1. Si tu documentación interna aún usa la Categoría 0, debe actualizarse.</p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 4 · Mitigación y EPP" data-title="Jerarquía de controles">
+  <header><span class="eyebrow">Módulo 4 · Lección 3</span><h2>Jerarquía de controles</h2></header>
+  <p>El EPP es la <b>última barrera</b>. La NFPA 70E exige aplicar primero las medidas que eliminan o reducen el riesgo, en este orden:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Nivel</th><th>Medida</th><th>Ejemplo en arco eléctrico</th></tr>
+    <tr><td class="num">1</td><td><b>Eliminación</b></td><td>Establecer una condición de trabajo eléctricamente segura: desenergizar, bloquear y etiquetar (LOTO) y verificar ausencia de tensión.</td></tr>
+    <tr><td class="num">2</td><td><b>Sustitución</b></td><td>Reemplazar equipos por otros con menor nivel de riesgo.</td></tr>
+    <tr><td class="num">3</td><td><b>Controles de ingeniería</b></td><td>Relés de arco, modo de mantenimiento en interruptores, celdas resistentes al arco, operación remota.</td></tr>
+    <tr><td class="num">4</td><td><b>Señalización y advertencias</b></td><td>Etiquetas de arco eléctrico en tableros, delimitación del límite de arco.</td></tr>
+    <tr><td class="num">5</td><td><b>Controles administrativos</b></td><td>Procedimientos, permisos de trabajo energizado, capacitación, persona calificada.</td></tr>
+    <tr><td class="num">6</td><td><b>EPP</b></td><td>Ropa y protección con clasificación de arco según la energía incidente.</td></tr>
+  </table></div>
+  <h3>Actividad: elige el EPP</h3>
+  <div class="kc" data-correct="2"><p class="q">La etiqueta de un CCM indica 11,6 cal/cm² a 455 mm. ¿Qué EPP corresponde para trabajar a esa distancia?</p><div class="opts">
+    <button class="opt" data-fb="No. 4 cal/cm² es insuficiente para 11,6 cal/cm².">Categoría 1 (4 cal/cm²)</button>
+    <button class="opt" data-fb="No. 8 cal/cm² es menor que 11,6 cal/cm².">Categoría 2 (8 cal/cm²)</button>
+    <button class="opt" data-fb="Correcto. Se necesita una clasificación de arco de al menos 11,6 cal/cm²; la siguiente categoría es la 3 (25 cal/cm²).">Categoría 3 (25 cal/cm²)</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="1"><p class="q">Un interruptor tiene un “modo mantenimiento” que reduce su tiempo de despeje durante los trabajos. ¿Qué nivel de la jerarquía representa?</p><div class="opts">
+    <button class="opt" data-fb="No. El equipo sigue energizado, no se elimina el peligro.">Eliminación</button>
+    <button class="opt" data-fb="Correcto. Es un control de ingeniería: reduce t y con ello la energía incidente.">Control de ingeniería</button>
+    <button class="opt" data-fb="No. No depende de la ropa del trabajador.">EPP</button></div><p class="fb" hidden></p></div>
+</section>
+
+<section class="lesson" data-mod="Módulo 4 · Mitigación y EPP" data-title="Autoevaluación módulo 4" data-quiz="m4">
+  <header><span class="eyebrow">Módulo 4 · Autoevaluación</span><h2>Comprueba lo aprendido</h2></header>
+  <div class="kc" data-correct="1"><p class="q">1. ¿Qué energía incidente produce la ignición instantánea de una camisa de algodón?</p><div class="opts">
+    <button class="opt" data-fb="No. 1,2 cal/cm² es el umbral de quemadura de segundo grado.">1,2 cal/cm²</button>
+    <button class="opt" data-fb="Correcto.">4 cal/cm²</button>
+    <button class="opt" data-fb="No. 8 cal/cm² corresponde a quemadura de tercer grado.">8 cal/cm²</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="2"><p class="q">2. ¿Cuál es la clasificación de arco mínima del EPP Categoría 4?</p><div class="opts">
+    <button class="opt" data-fb="No. Esa es la Categoría 2.">8 cal/cm²</button>
+    <button class="opt" data-fb="No. Esa es la Categoría 3.">25 cal/cm²</button>
+    <button class="opt" data-fb="Correcto.">40 cal/cm²</button></div><p class="fb" hidden></p></div>
+  <div class="kc" data-correct="0"><p class="q">3. ¿Cuál es la medida más efectiva frente al riesgo de arco eléctrico?</p><div class="opts">
+    <button class="opt" data-fb="Correcto. Sin energía no hay arco.">Establecer una condición de trabajo eléctricamente segura (desenergizar y bloquear).</button>
+    <button class="opt" data-fb="No. El EPP es la última barrera.">Usar EPP Categoría 4 en todos los trabajos.</button>
+    <button class="opt" data-fb="No. La señalización informa pero no reduce la energía.">Instalar etiquetas de advertencia.</button></div><p class="fb" hidden></p></div>
+</section>
+
+<!-- ================= EVALUACIÓN FINAL ================= -->
+<section class="lesson" data-mod="Evaluación final" data-title="Evaluación final" data-exam="1">
+  <header><span class="eyebrow">Evaluación final</span><h2>Evaluación final del curso</h2></header>
+  <div id="examIntro" class="callout"><b class="k">Instrucciones</b><p>15 preguntas de selección múltiple elegidas al azar. Escala de notas 1,0 a 7,0 con 60% de exigencia; apruebas con nota 4,0. Tienes <b id="examTries">2 intentos disponibles</b>. No hay límite de tiempo.</p></div>
+  <div id="examLocked" class="callout warn" hidden><b class="k">Aún no disponible</b><p>Revisa todas las lecciones del curso para habilitar la evaluación final. Te faltan: <span id="missing"></span>.</p></div>
+  <button class="btn primary" id="examStart" type="button" style="align-self:flex-start">Comenzar evaluación</button>
+  <form id="examForm" hidden style="display:flex;flex-direction:column;gap:14px"></form>
+  <div id="examResult" hidden style="display:flex;flex-direction:column;gap:14px"></div>
+</section>
+
+<section class="lesson" data-mod="Cierre" data-title="Cierre y glosario">
+  <header><span class="eyebrow">Cierre</span><h2>Cierre del curso</h2></header>
+  <div id="constancia"></div>
+  <h3>Ideas para llevar al terreno</h3>
+  <ol>
+    <li>Desenergizar es siempre la primera opción.</li>
+    <li>La energía incidente depende de la corriente de arco, del tiempo de despeje y de la distancia.</li>
+    <li>El EPP se elige con una clasificación de arco igual o mayor a la energía incidente.</li>
+    <li>Respeta el límite de arco y la etiqueta de cada tablero.</li>
+  </ol>
+  <h3>Glosario</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Término</th><th>Definición</th></tr>
+    <tr><td>Arco eléctrico</td><td>Descarga de corriente a través del aire entre conductores de distinto potencial, con formación de plasma.</td></tr>
+    <tr><td>Energía incidente</td><td>Energía calórica que recibe una superficie a cierta distancia del arco. Se mide en cal/cm² o J/cm².</td></tr>
+    <tr><td>Límite de arco</td><td>Distancia a la que la energía incidente es 1,2 cal/cm² (5 J/cm²).</td></tr>
+    <tr><td>ATPV / EBT</td><td>Valores que expresan la clasificación de arco de una prenda, en cal/cm².</td></tr>
+    <tr><td>I<sub>bf</sub></td><td>Corriente de cortocircuito trifásica sólida (bolted fault).</td></tr>
+    <tr><td>I<sub>a</sub></td><td>Corriente de arco, menor que I<sub>bf</sub>.</td></tr>
+    <tr><td>Persona calificada</td><td>Quien tiene conocimientos y capacitación para reconocer y evitar los peligros eléctricos del trabajo que realiza.</td></tr>
+    <tr><td>Condición de trabajo eléctricamente segura</td><td>Estado en que el equipo está desconectado, bloqueado, etiquetado, verificado sin tensión y, si corresponde, puesto a tierra.</td></tr>
+  </table></div>
+  <h3>Referencias</h3>
+  <ul>
+    <li>NFPA 70E, Norma para la seguridad eléctrica en lugares de trabajo (verificar edición vigente).</li>
+    <li>IEEE Std 1584, Guía para realizar cálculos de riesgo de arco eléctrico (ediciones 2002 y 2018).</li>
+    <li>Decreto Supremo N°8 del Ministerio de Energía y pliego técnico RIC N°17, Operación y mantenimiento (SEC).</li>
+  </ul>
+</section>
+
+<div class="pager"><p class="subtitle" id="subtitle" hidden></p><div class="row"><button class="btn" id="prevBtn" type="button" aria-label="Anterior"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg><span class="lbl">Anterior</span></button><span class="pos" id="pos" aria-live="polite"></span><button class="btn primary" id="nextBtn" type="button">Siguiente<svg class="ico"><use href="#i-right"/></svg></button></div></div>
+</main>
+</div>
+
+<script>
+/* ================== CONFIGURACIÓN OTEC ================== */
+var CONFIG = { horas: "4 horas", intentos: 2, preguntas: 15, exigencia: 0.6, notaAprobacion: 4.0 };
+
+/* ================== SCORM 1.2 (opcional) ================== */
+var SCORM = (function(){
+  var api=null, ok=false;
+  function find(w){ var n=0; while(w && !w.API && w.parent && w.parent!==w && n<10){ n++; w=w.parent; } return w && w.API ? w.API : null; }
+  try { api = find(window) || (window.opener ? find(window.opener) : null); } catch(e){ api=null; }
+  function get(k){ try{ return ok ? String(api.LMSGetValue(k)||"") : ""; }catch(e){ return ""; } }
+  function set(k,v){ try{ if(ok) api.LMSSetValue(k,String(v)); }catch(e){} }
+  function commit(){ try{ if(ok) api.LMSCommit(""); }catch(e){} }
+  return {
+    init:function(){ if(!api) return false; try{ ok = String(api.LMSInitialize(""))==="true"; }catch(e){ ok=false; } return ok; },
+    get:get, set:set, commit:commit,
+    finish:function(){ if(!ok) return; commit(); try{ api.LMSFinish(""); }catch(e){} ok=false; },
+    active:function(){ return ok; }
+  };
+})();
+
+/* ================== ESTADO Y PERSISTENCIA ================== */
+var KEY="ssgi-nfpa70e-v1";
+var state={ v:[], a:0, best:null, cur:0, passed:false };
+function load(){
+  var raw="";
+  if(SCORM.init()){
+    raw=SCORM.get("cmi.suspend_data");
+    if(SCORM.get("cmi.core.lesson_status")==="not attempted") SCORM.set("cmi.core.lesson_status","incomplete");
+  }
+  if(!raw){ try{ raw=localStorage.getItem(KEY)||""; }catch(e){} }
+  try{ if(raw){ var s=JSON.parse(raw); for(var k in s) state[k]=s[k]; } }catch(e){}
+}
+function save(){
+  var raw=JSON.stringify(state);
+  try{ localStorage.setItem(KEY,raw); }catch(e){}
+  if(SCORM.active()){
+    SCORM.set("cmi.suspend_data",raw);
+    SCORM.set("cmi.core.lesson_location",String(state.cur));
+    SCORM.commit();
+  }
+}
+window.addEventListener("beforeunload",function(){ try{ speechSynthesis.cancel(); }catch(e){} save(); SCORM.finish(); });
+
+/* ================== NAVEGACIÓN ================== */
+var lessons=[].slice.call(document.querySelectorAll(".lesson"));
+var examIdx=lessons.findIndex(function(l){return l.dataset.exam;});
+var MINS=[5, 5, 5, 10, 10, 5, 5, 5, 10, 10, 20, 20, 20, 15, 10, 5, 10, 10, 10, 45, 5];
+lessons.forEach(function(l,i){ var eb=l.querySelector(":scope > header .eyebrow")||l.querySelector(".hero .eyebrow"); if(eb){ var d=document.createElement("span"); d.className="dur"; d.textContent=" · ≈ "+MINS[i]+" min"; eb.appendChild(d); } });
+var toc=document.getElementById("toc");
+var tocBtns=[];
+(function buildToc(){
+  var lastMod="";
+  lessons.forEach(function(l,i){
+    if(l.dataset.mod!==lastMod){ lastMod=l.dataset.mod; var d=document.createElement("div"); d.className="mod"; d.textContent=lastMod; toc.appendChild(d); }
+    var b=document.createElement("button"); b.type="button";
+    b.innerHTML='<span class="dot"></span><span class="tt"></span><span class="min">'+MINS[i]+' min</span>'; b.querySelector(".tt").textContent=l.dataset.title; b.setAttribute("aria-label",l.dataset.title+", "+MINS[i]+" minutos");
+    b.addEventListener("click",function(){ go(i); closeMenu(); });
+    toc.appendChild(b); tocBtns.push(b);
+  });
+})();
+function contentIdx(){ return lessons.map(function(_,i){return i;}).filter(function(i){ return i!==examIdx && i<examIdx; }); }
+function missing(){ return contentIdx().filter(function(i){ return state.v.indexOf(i)<0; }); }
+function updateProgress(){
+  var total=contentIdx().length+1, done=contentIdx().filter(function(i){return state.v.indexOf(i)>=0;}).length+(state.passed?1:0);
+  var pct=Math.round(done/total*100);
+  document.getElementById("progTxt").textContent=pct+"%";
+  document.getElementById("progBar").style.width=pct+"%";
+  tocBtns.forEach(function(b,i){
+    b.classList.toggle("done", i===examIdx ? state.passed : state.v.indexOf(i)>=0);
+    b.classList.toggle("locked", i===examIdx && missing().length>0);
+  });
+}
+function slug(t){ return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+var slugs=lessons.map(function(l){ return slug(l.dataset.title); });
+var booted=false;
+function go(i,opt){
+  opt=opt||{};
+  i=Math.max(0,Math.min(lessons.length-1,i));
+  lessons.forEach(function(l,k){ l.hidden = k!==i; });
+  tocBtns.forEach(function(b,k){ b.setAttribute("aria-current", k===i ? "true":"false"); });
+  state.cur=i;
+  if(i!==examIdx && state.v.indexOf(i)<0) state.v.push(i);
+  document.getElementById("prevBtn").disabled = i===0;
+  document.getElementById("nextBtn").disabled = i===lessons.length-1;
+  if(i===examIdx) renderExamGate();
+  if(i===lessons.length-1) renderConstancia();
+  updateProgress(); save();
+  if(window.Relato) Relato.onLesson(i);
+  document.getElementById("pos").textContent=(i+1)+" / "+lessons.length;
+  document.querySelector(".pager").classList.toggle("wide", i===0);
+  if(opt.push!==false && booted){ try{ if(location.hash!=="#"+slugs[i]) history.pushState({i:i},"","#"+slugs[i]); }catch(e){} }
+  window.scrollTo(0,0);
+  if(booted && opt.focus!==false){ var hd=lessons[i].querySelector("h1,h2"); if(hd){ hd.setAttribute("tabindex","-1"); try{ hd.focus({preventScroll:true}); }catch(e){} } }
+}
+window.addEventListener("popstate",function(){ var k=slugs.indexOf(location.hash.slice(1)); go(k>=0?k:0,{push:false}); });
+document.getElementById("prevBtn").onclick=function(){ go(state.cur-1); };
+document.getElementById("nextBtn").onclick=function(){ go(state.cur+1); };
+var menuBtn=document.getElementById("menuBtn");
+var scrim=document.getElementById("scrim");
+if(!/claude|anthropic/i.test(location.hostname)) document.documentElement.style.setProperty("--sat","env(safe-area-inset-top, 0px)"); document.documentElement.style.setProperty("--tbtop","0px");
+function setTb(){ var tb=document.querySelector(".topbar"); document.documentElement.style.setProperty("--tb",Math.round(tb.getBoundingClientRect().height)+"px"); }
+setTb(); window.addEventListener("resize",setTb);
+function closeMenu(){ var was=toc.classList.contains("open"); toc.classList.remove("open"); scrim.classList.remove("on"); menuBtn.setAttribute("aria-expanded","false"); if(was) menuBtn.focus(); }
+menuBtn.onclick=function(){ var o=toc.classList.toggle("open"); scrim.classList.toggle("on",o); menuBtn.setAttribute("aria-expanded", o?"true":"false"); if(o){ var c=toc.querySelector('[aria-current="true"]')||toc.querySelector("button"); c&&c.focus(); } };
+scrim.onclick=closeMenu;
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ if(toc.classList.contains("open")) closeMenu(); hideGloss(); } });
+
+/* ================== INTERACCIONES ================== */
+function ICO(n){ return '<svg class="ico" aria-hidden="true"><use href="#i-'+n+'"/></svg>'; }
+document.querySelectorAll(".kc").forEach(function(kc,n){ var q=kc.querySelector(".q"); q.id="kcq"+n; kc.setAttribute("role","group"); kc.setAttribute("aria-labelledby",q.id); var fb=kc.querySelector(".fb"); fb.setAttribute("role","status"); fb.setAttribute("aria-live","polite"); });
+document.querySelectorAll(".sorter .fb").forEach(function(fb){ fb.setAttribute("role","status"); fb.setAttribute("aria-live","polite"); });
+document.querySelectorAll(".flip").forEach(function(f){ f.setAttribute("aria-pressed","false"); f.onclick=function(){ f.setAttribute("aria-pressed", f.getAttribute("aria-pressed")==="true"?"false":"true"); }; });
+
+document.querySelectorAll(".kc").forEach(function(kc){
+  var opts=[].slice.call(kc.querySelectorAll(".opt")), fb=kc.querySelector(".fb"), c=+kc.dataset.correct;
+  opts.forEach(function(o,i){ o.type="button"; o.onclick=function(){
+    opts.forEach(function(x){ x.classList.remove("right","wrong"); });
+    var good=i===c; o.classList.add(good?"right":"wrong");
+    fb.hidden=false; fb.className="fb "+(good?"right":"wrong"); fb.innerHTML=(good?ICO("check"):ICO("x"))+" "; fb.appendChild(document.createTextNode(o.dataset.fb+(good?"":" Intenta otra vez.")));
+    opts.forEach(function(x){ x.setAttribute("aria-pressed", x===o?"true":"false"); });
+    if(good) opts.forEach(function(x){ x.disabled=true; });
+  }; });
+});
+
+document.querySelectorAll(".sorter").forEach(function(s){
+  var rows=[].slice.call(s.querySelectorAll(".row")), fb=s.querySelector(".fb");
+  rows.forEach(function(r){ r.querySelectorAll("button").forEach(function(b){ b.onclick=function(){
+    r.querySelectorAll("button").forEach(function(x){ x.classList.remove("primary"); }); b.classList.add("primary");
+    r.classList.remove("right","wrong"); r.classList.add(b.dataset.v===r.dataset.ans?"right":"wrong");
+    var answered=rows.filter(function(x){return x.classList.contains("right")||x.classList.contains("wrong");});
+    if(answered.length===rows.length){ var ok=rows.filter(function(x){return x.classList.contains("right");}).length;
+      fb.hidden=false; fb.className="fb "+(ok===rows.length?"right":"wrong");
+      fb.innerHTML=""; fb.textContent= ok===rows.length ? "¡Muy bien! La norma cubre las actividades de trabajo con exposición a riesgo eléctrico." : "Tienes "+ok+" de "+rows.length+" correctas. Revisa las marcadas en rojo: la norma cubre instalación, inspección, operación, mantenimiento y desmantelamiento.";
+    }
+  }; }); });
+});
+
+document.querySelectorAll(".sens button").forEach(function(b){ b.onclick=function(){ b.parentNode.classList.add("show"); }; });
+/* glosario emergente */
+var GLOSS={
+ "energía incidente":"Energía calórica que recibe una superficie a cierta distancia del arco. Se mide en cal/cm² o J/cm².",
+ "límite de arco":"Distancia a la que la energía incidente baja a 1,2 cal/cm² (5 J/cm²). Dentro de ella se exige EPP con clasificación de arco.",
+ "corriente de arco":"Corriente que circula a través del aire durante el arco. Es menor que la corriente de falla sólida.",
+ "plasma":"Gas ionizado e incandescente por el que circula la corriente del arco.",
+ "ATPV":"Valor de desempeño térmico del arco: energía, en cal/cm², que resiste una prenda antes de que la piel sufra una quemadura de segundo grado.",
+ "EBT":"Umbral de ruptura: energía, en cal/cm², a la que la tela se rompe y deja pasar el calor.",
+ "condición de trabajo eléctricamente segura":"Equipo desconectado, bloqueado, etiquetado, verificado sin tensión y, si corresponde, puesto a tierra.",
+ "persona calificada":"Quien tiene conocimientos y capacitación para reconocer y evitar los peligros eléctricos del trabajo que realiza.",
+ "LOTO":"Bloqueo y etiquetado (Lockout/Tagout): procedimiento para dejar un equipo sin energía y evitar que se reenergice durante el trabajo."
+};
+var glossEl=null;
+function hideGloss(){ if(glossEl){ glossEl.remove(); glossEl=null; document.querySelectorAll(".term[aria-expanded=true]").forEach(function(t){t.setAttribute("aria-expanded","false");}); } }
+(function(){
+  var keys=Object.keys(GLOSS).sort(function(a,b){return b.length-a.length;});
+  var re=new RegExp("("+keys.map(function(k){return k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}).join("|")+")","i");
+  lessons.forEach(function(l){
+    var used={};
+    var walker=document.createTreeWalker(l,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+      var p=n.parentElement; if(!p||p.closest("svg,.kc,.exam-q,.narr,.formula,.calcline,.label-af,button,h1,h2,h3,h4,th,figcaption,.vars dt,.effect,.sorter,.flip,table,#examResult,.facts,.results,label,summary,.tag,dt,.vars")) return NodeFilter.FILTER_REJECT;
+      return re.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP; }});
+    var nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(n){
+      var m=n.nodeValue.match(re); if(!m) return; var key=keys.filter(function(k){return k.toLowerCase()===m[1].toLowerCase();})[0]; if(used[key]) return; used[key]=1;
+      var idx=m.index, after=n.splitText(idx); after.splitText(m[1].length);
+      var b=document.createElement("button"); b.type="button"; b.className="term"; b.textContent=after.nodeValue; b.setAttribute("aria-expanded","false"); b.dataset.k=key;
+      after.parentNode.replaceChild(b,after);
+    });
+  });
+  document.addEventListener("click",function(e){
+    var t=e.target.closest(".term");
+    if(!t){ if(!e.target.closest(".gloss")) hideGloss(); return; }
+    var open=t.getAttribute("aria-expanded")==="true"; hideGloss(); if(open) return;
+    glossEl=document.createElement("div"); glossEl.className="gloss"; glossEl.setAttribute("role","note");
+    var bb=document.createElement("b"); bb.textContent=t.dataset.k.charAt(0).toUpperCase()+t.dataset.k.slice(1); glossEl.appendChild(bb); glossEl.appendChild(document.createTextNode(GLOSS[t.dataset.k]));
+    document.body.appendChild(glossEl); t.setAttribute("aria-expanded","true");
+    var r=t.getBoundingClientRect(), w=glossEl.offsetWidth, h=glossEl.offsetHeight;
+    var x=Math.max(16,Math.min(innerWidth-w-16,r.left)), y=r.bottom+8; if(y+h>innerHeight-90) y=Math.max(70,r.top-h-8);
+    glossEl.style.left=x+"px"; glossEl.style.top=y+"px";
+  });
+  window.addEventListener("scroll",hideGloss,{passive:true});
+})();
+/* pasos del ejemplo */
+(function(){ var btn=document.getElementById("nextStep"); var steps=[].slice.call(document.querySelectorAll("#steps .step"));
+  btn.onclick=function(){ var h=steps.filter(function(s){return s.hidden;}); if(h.length){ h[0].hidden=false; } if(h.length<=1){ btn.hidden=true; } };
+})();
+
+/* ================== CÁLCULO IEEE 1584-2002 ================== */
+function fmt(n,d){ return n.toLocaleString("es-CL",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function arcflash(p){ // p: Ibf kA, V kV, G, x, box, grounded, t, D
+  var lb=Math.log10(p.Ibf), lgIa;
+  if(p.V<=1){ var K=p.box?-0.097:-0.153; lgIa=K+0.662*lb+0.0966*p.V+0.000526*p.G+0.5588*p.V*lb-0.00304*p.G*lb; }
+  else lgIa=0.00402+0.983*lb;
+  var Ia=Math.pow(10,lgIa);
+  var En=Math.pow(10,(p.box?-0.555:-0.792)+(p.grounded?-0.113:0)+1.081*Math.log10(Ia)+0.0011*p.G);
+  var Cf=p.V<=1?1.5:1.0, base=4.184*Cf*En*(p.t/0.2);
+  var E=base*Math.pow(610,p.x)/Math.pow(p.D,p.x);
+  var DB=Math.pow(base*Math.pow(610,p.x)/5,1/p.x);
+  return {Ia:Ia,En:En,E:E,Ecal:E/4.184,DB:DB};
+}
+function ppe(cal){
+  if(cal<1.2) return {c:"Sin EPP de arco", t:"Bajo 1,2 cal/cm²: no se requiere ropa con clasificación de arco por este peligro. Usa ropa de fibra natural y el EPP contra choque que corresponda."};
+  if(cal<=4) return {c:"Categoría 1", t:"Usa EPP con clasificación de arco de al menos 4 cal/cm² (Categoría 1)."};
+  if(cal<=8) return {c:"Categoría 2", t:"Usa EPP con clasificación de arco de al menos 8 cal/cm² (Categoría 2)."};
+  if(cal<=25) return {c:"Categoría 3", t:"Usa EPP con clasificación de arco de al menos 25 cal/cm² (Categoría 3)."};
+  if(cal<=40) return {c:"Categoría 4", t:"Usa EPP con clasificación de arco de al menos 40 cal/cm² (Categoría 4)."};
+  return {c:"Desenergizar", t:"Sobre 40 cal/cm² no existe categoría de EPP. El trabajo debe hacerse desenergizado o se debe reducir la energía incidente."};
+}
+function drawChart(t,Dsel){
+  var svg=document.getElementById("simChart"); if(!svg) return;
+  var L=50,R=416,Tp=10,B=240, dMin=100,dMax=1200, yMin=Math.log10(0.03), yMax=Math.log10(100);
+  function X(d){ return L+(d-dMin)/(dMax-dMin)*(R-L); } function Y(e){ var l=Math.log10(Math.max(0.03,Math.min(100,e))); return B-(l-yMin)/(yMax-yMin)*(B-Tp); }
+  var bands=[[0.03,1.2,0,"Sin EPP de arco"],[1.2,4,.10,"Cat. 1"],[4,8,.18,"Cat. 2"],[8,25,.28,"Cat. 3"],[25,40,.40,"Cat. 4"],[40,100,.62,"Desenergizar"]];
+  var h="";
+  bands.forEach(function(b){ h+='<rect class="band" x="'+L+'" y="'+Y(b[1])+'" width="'+(R-L)+'" height="'+(Y(b[0])-Y(b[1]))+'" opacity="'+b[2]+'"/>'+'<text class="bl" x="'+(R-6)+'" y="'+((Y(b[0])+Y(b[1]))/2+4)+'" text-anchor="end">'+b[3]+'</text>'; });
+  [0.1,1,10,100].forEach(function(e){ h+='<line class="axis" x1="'+L+'" x2="'+R+'" y1="'+Y(e)+'" y2="'+Y(e)+'"/><text x="'+(L-6)+'" y="'+(Y(e)+4)+'" text-anchor="end">'+String(e).replace(".",",")+'</text>'; });
+  [100,455,800,1200].forEach(function(d){ h+='<text x="'+X(d)+'" y="'+(B+18)+'" text-anchor="middle">'+d+'</text>'; });
+  h+='<text x="'+((L+R)/2)+'" y="'+(B+44)+'" text-anchor="middle">Distancia de trabajo (mm)</text><text x="12" y="'+((Tp+B)/2)+'" text-anchor="middle" transform="rotate(-90 12 '+((Tp+B)/2)+')">cal/cm²</text>';
+  var pts=[]; for(var d=dMin; d<=dMax; d+=10){ pts.push(X(d).toFixed(1)+","+Y(arcflash({Ibf:10.852,V:0.38,G:32,x:1.641,box:true,grounded:true,t:t,D:d}).Ecal).toFixed(1)); }
+  h+='<polyline class="curve" points="'+pts.join(" ")+'"/>';
+  var e=arcflash({Ibf:10.852,V:0.38,G:32,x:1.641,box:true,grounded:true,t:t,D:Dsel}).Ecal;
+  h+='<circle class="dot" cx="'+X(Dsel)+'" cy="'+Y(e)+'" r="8"/>';
+  svg.innerHTML=h;
+}
+(function sim(){
+  var T=document.getElementById("simT"), D=document.getElementById("simD");
+  function upd(){
+    var r=arcflash({Ibf:10.852,V:0.38,G:32,x:1.641,box:true,grounded:true,t:+T.value,D:+D.value});
+    document.getElementById("simTv").textContent=fmt(+T.value,2)+" s";
+    document.getElementById("simDv").textContent=fmt(+D.value,0)+" mm";
+    document.getElementById("simE").textContent=fmt(r.Ecal,2)+" cal/cm²";
+    document.getElementById("simP").textContent=ppe(r.Ecal).c;
+    drawChart(+T.value,+D.value);
+  }
+  T.oninput=upd; D.oninput=upd; upd();
+})();
+(function calc(){
+  var ids=["cS","cV","cZ","cT","cD","cEq","cGr"], eq={ej:[32,1.641,true],tab:[25,1.641,true],sw:[32,1.473,true],cab:[13,2.0,true],air:[25,2.0,false]};
+  function v(id){ return document.getElementById(id).value; }
+  function n(id){ return parseFloat(String(v(id)).replace(/\s/g,"").replace(",",".")); }
+  function upd(){
+    var S=n("cS"), V=n("cV"), Z=n("cZ"), t=n("cT"), D=n("cD"), e=eq[v("cEq")], box=document.getElementById("rPPE");
+    if(!(S>0&&V>0&&Z>0&&t>0&&D>0)){ ["rIbf","rIa","rEJ","rEc","rDB"].forEach(function(id){ document.getElementById(id).textContent="–"; });
+      box.className="callout warn"; box.innerHTML="<b class='k'>Revisa los datos</b><p>Escribe solo números mayores que cero. Puedes usar coma o punto decimal, por ejemplo 4,2.</p>"; return; }
+    var Ibf=S*1000/(Math.sqrt(3)*V)/(Z/100)/1000;
+    var r=arcflash({Ibf:Ibf,V:V/1000,G:e[0],x:e[1],box:e[2],grounded:v("cGr")==="g",t:t,D:D});
+    document.getElementById("rIbf").textContent=fmt(Ibf,2)+" kA";
+    document.getElementById("rIa").textContent=fmt(r.Ia,2)+" kA";
+    document.getElementById("rEJ").textContent=fmt(r.E,1)+" J/cm²";
+    document.getElementById("rEc").textContent=fmt(r.Ecal,2)+" cal/cm²";
+    document.getElementById("rDB").textContent=fmt(r.DB,0)+" mm";
+    var p=ppe(r.Ecal), warn=(V>1000?" La calculadora usa la ecuación simplificada para tensiones sobre 1 kV.":"")+((Ibf<0.7||Ibf>106)?" Ojo: I<sub>bf</sub> está fuera del rango de validez del método (0,7 a 106 kA).":"")+(D<300?" La distancia es menor que la de trabajo típica (455 mm en tableros): el resultado es solo referencial.":"")+(t>2?" Un arco de más de 2 s es poco realista: normalmente la persona se aleja antes.":"");
+    box.className="callout"+(r.Ecal>=1.2?" warn":"");
+    box.innerHTML="<b class='k'>"+p.c+"</b><p>"+p.t+(D<r.DB?" El trabajador está <b>dentro</b> del límite de arco.":" El trabajador está <b>fuera</b> del límite de arco.")+warn+"</p>";
+  }
+  ids.forEach(function(id){ document.getElementById(id).addEventListener("input",upd); document.getElementById(id).addEventListener("change",upd); });
+  upd();
+})();
+/* escala de lesiones (logarítmica de 0,001 a 10 cal/cm²) */
+document.querySelectorAll("#scale .r").forEach(function(r){ var v=+r.dataset.v; r.querySelector("i").style.width=Math.max(3,(Math.log10(v)+3)/4*100)+"%"; });
+
+/* ================== EVALUACIÓN FINAL ================== */
+var BANK=[
+ ["El propósito principal de la NFPA 70E es:",["Proveer un área de trabajo segura frente a los riesgos eléctricos, en particular el arco eléctrico.","Definir los requisitos de diseño de las instalaciones eléctricas domiciliarias.","Establecer las tarifas eléctricas industriales.","Regular la fabricación de conductores eléctricos."]],
+ ["Si en una intervención no es posible desconectar la energía, la norma indica que se debe:",["Aumentar el grado de protección del equipamiento corporal según la energía incidente.","Trabajar con guantes de algodón.","Reducir el número de trabajadores a uno.","Trabajar solo en horario nocturno."]],
+ ["La primera edición de la NFPA 70E se publicó en el año:",["1978","1976","2003","2022"]],
+ ["En Chile, ¿qué pliego técnico hace referencia a la NFPA 70E para la operación y el mantenimiento?",["RIC N°17","RIC N°1","NCh Elec. 4/2003","RIC N°19"]],
+ ["Un arco eléctrico es:",["Una descarga en que la corriente atraviesa el aire entre conductores de distinto potencial, formando plasma.","Una corriente que circula por el cuerpo al tocar un conductor.","Una sobrecarga lenta en un conductor.","La caída de tensión en un cable largo."]],
+ ["En comparación con la corriente de falla sólida (Ibf), la corriente de arco (Ia) es:",["Menor, por la impedancia del plasma.","Mayor, porque el plasma es superconductor.","Siempre igual.","Nula en baja tensión."]],
+ ["¿Cuál de las siguientes es una causa típica de arco eléctrico?",["La caída de una herramienta entre fases energizadas.","El uso de ropa con clasificación de arco.","La señalización del tablero.","La medición de la resistencia de aislamiento en un equipo desenergizado."]],
+ ["Las tres variables que determinan la energía incidente de un arco son:",["Corriente de arco, tiempo de despeje y distancia.","Color del tablero, marca y antigüedad.","Tensión, frecuencia y potencia reactiva.","Temperatura ambiente, humedad y altitud."]],
+ ["Con la misma corriente de arco, si aumenta el tiempo de operación de la protección, la energía incidente:",["Aumenta.","Disminuye.","No cambia.","Se anula."]],
+ ["Si el trabajador se aleja del punto de arco, la energía incidente que recibe:",["Disminuye.","Aumenta.","No cambia.","Se duplica."]],
+ ["¿Qué energía incidente produce una quemadura de segundo grado instantánea en piel desnuda?",["1,2 cal/cm²","0,0033 cal/cm²","4 cal/cm²","40 cal/cm²"]],
+ ["El límite de arco se define como la distancia donde la energía incidente es:",["1,2 cal/cm² (5 J/cm²)","4 cal/cm² (16,7 J/cm²)","8 cal/cm² (33,5 J/cm²)","40 cal/cm² (167 J/cm²)"]],
+ ["Un cálculo entrega E = 18,9 J/cm². Expresado en cal/cm² es aproximadamente:",["4,5 cal/cm²","3,8 cal/cm²","79 cal/cm²","18,9 cal/cm²"]],
+ ["Para una energía incidente de 4,5 cal/cm², el EPP mínimo adecuado es:",["Categoría 2 (8 cal/cm²)","Categoría 1 (4 cal/cm²)","Ropa de algodón sin clasificación","No se requiere EPP"]],
+ ["La clasificación de arco mínima del EPP Categoría 4 es:",["40 cal/cm²","25 cal/cm²","8 cal/cm²","100 cal/cm²"]],
+ ["Las normas utilizadas para el cálculo de la energía incidente son:",["NFPA 70E e IEEE 1584","ISO 9001 e ISO 14001","NCh 2369 y NCh 433","IEC 60529 e IP67"]],
+ ["En las ecuaciones IEEE 1584, el factor Cf para tensiones de 1 kV o menos es:",["1,5","1,0","0,2","4,184"]],
+ ["Para calcular el arco eléctrico se requieren previamente los estudios de:",["Cortocircuito y coordinación de protecciones.","Iluminación y ventilación.","Ruido y vibraciones.","Mecánica de suelos."]],
+ ["Según la jerarquía de controles, la medida más efectiva frente al arco eléctrico es:",["Establecer una condición de trabajo eléctricamente segura (desenergizar y bloquear).","Usar siempre EPP Categoría 4.","Instalar etiquetas de advertencia.","Capacitar al personal una vez al año."]],
+ ["¿A partir de qué energía incidente se produce la ignición instantánea de una camisa de algodón?",["4 cal/cm²","1 cal/cm²","0,0033 cal/cm²","40 cal/cm²"]],
+ ["¿Por qué no conviene sobredimensionar el EPP de arco?",["Reduce la movilidad y la visibilidad, y aumenta la incomodidad y el estrés térmico.","Porque disminuye la energía incidente.","Porque está prohibido por la NFPA 70E.","Porque aumenta la corriente de arco."]],
+ ["Sobre 40 cal/cm² de energía incidente, lo correcto es:",["Desenergizar o reducir la energía incidente, porque no existe categoría de EPP.","Usar EPP Categoría 3.","Usar dos trajes de Categoría 2.","Trabajar con mayor rapidez."]]
+];
+var current=null;
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function pl(n,uno,varios){ return n+" "+(n===1?uno:varios); }
+function nota(p){ var n = p<CONFIG.exigencia ? 1+3*(p/CONFIG.exigencia) : 4+3*(p-CONFIG.exigencia)/(1-CONFIG.exigencia); return Math.round(n*10)/10; }
+function renderExamGate(){
+  var miss=missing(), left=CONFIG.intentos-state.a;
+  document.getElementById("examTries").textContent=pl(Math.max(0,left),"intento disponible","intentos disponibles");
+  document.getElementById("examLocked").hidden = miss.length===0;
+  document.getElementById("missing").textContent = miss.map(function(i){return lessons[i].dataset.title;}).join(", ");
+  var start=document.getElementById("examStart");
+  start.hidden = miss.length>0 || left<=0 || state.passed || !document.getElementById("examForm").hidden;
+  if(document.getElementById("examForm").hidden && (state.passed || left<=0) && state.best!==null && document.getElementById("examResult").hidden){
+    showSummary();
+  }
+}
+function showSummary(){
+  var res=document.getElementById("examResult"); res.hidden=false;
+  var pass=state.passed;
+  res.innerHTML='<div class="grade '+(pass?"pass":"fail")+'"><span class="big">'+fmt(state.best,1)+'</span><div><b>'+(pass?"Evaluación aprobada":"Evaluación no aprobada")+'</b><p class="muted">'+(pass?"Ya completaste la evaluación final. Revisa el cierre del curso.":"Usaste todos tus intentos. Contacta a tu relator u OTEC para habilitar un nuevo intento.")+'</p></div></div>';
+}
+document.getElementById("examStart").onclick=function(){
+  var picks=shuffle(BANK.map(function(_,i){return i;})).slice(0,CONFIG.preguntas);
+  current=picks.map(function(i){ var q=BANK[i]; var order=shuffle(q[1].map(function(_,k){return k;})); return {q:q[0],opts:order.map(function(k){return q[1][k];}),correct:order.indexOf(0)}; });
+  var f=document.getElementById("examForm"); f.innerHTML="";
+  current.forEach(function(q,n){
+    var d=document.createElement("fieldset"); d.className="exam-q"; d.style.margin="0";
+    var html='<legend class="num">Pregunta '+(n+1)+' de '+current.length+'</legend><p class="q" style="font-weight:600"></p><div class="opts">';
+    q.opts.forEach(function(o,k){ html+='<label class="opt" style="display:flex;gap:10px;align-items:flex-start"><input type="radio" name="q'+n+'" id="q'+n+'o'+k+'" value="'+k+'" style="margin-top:4px"><span></span></label>'; });
+    d.innerHTML=html+'</div>';
+    d.querySelector(".q").textContent=q.q;
+    d.querySelectorAll(".opt span").forEach(function(s,k){ s.textContent=q.opts[k]; });
+    f.appendChild(d);
+  });
+  var msg=document.createElement("p"); msg.id="examMsg"; msg.className="fb wrong"; msg.setAttribute("role","alert"); msg.hidden=true; f.appendChild(msg);
+  var sub=document.createElement("button"); sub.type="submit"; sub.className="btn primary"; sub.textContent="Enviar respuestas"; sub.style.alignSelf="flex-start"; f.appendChild(sub);
+  f.hidden=false; document.getElementById("examStart").hidden=true; document.getElementById("examIntro").hidden=true; document.getElementById("examResult").hidden=true;
+  f.querySelectorAll("input").forEach(function(inp){ inp.onchange=function(){ inp.closest(".opts").querySelectorAll(".opt").forEach(function(l){ l.classList.toggle("sel", l.querySelector("input").checked); }); }; });
+};
+document.getElementById("examForm").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var f=ev.target, ans=current.map(function(_,n){ var c=f.querySelector('input[name="q'+n+'"]:checked'); return c?+c.value:-1; });
+  var blank=ans.filter(function(a){return a<0;}).length;
+  var msg=document.getElementById("examMsg");
+  if(blank){ msg.hidden=false; msg.textContent="Te falta responder "+pl(blank,"pregunta","preguntas")+". Revisa antes de enviar."; return; }
+  var ok=0; ans.forEach(function(a,n){ if(a===current[n].correct) ok++; });
+  var p=ok/current.length, n=nota(p), pass=n>=CONFIG.notaAprobacion;
+  state.a++; if(state.best===null || n>state.best){ state.best=n; state.bp=Math.round(p*100); } if(pass) state.passed=true;
+  var finalTry = pass || state.a>=CONFIG.intentos;
+  f.querySelectorAll("fieldset").forEach(function(fs,k){
+    fs.querySelectorAll("input").forEach(function(i){ i.disabled=true; });
+    var good=ans[k]===current[k].correct; fs.classList.add(good?"right":"wrong");
+    if(finalTry){ fs.querySelectorAll(".opt")[current[k].correct].classList.add("right"); if(!good) fs.querySelectorAll(".opt")[ans[k]].classList.add("wrong"); }
+  });
+  msg.hidden=true; f.querySelector("button[type=submit]").hidden=true;
+  var res=document.getElementById("examResult"); res.hidden=false;
+  var left=CONFIG.intentos-state.a;
+  res.innerHTML='<div class="grade '+(pass?"pass":"fail")+'"><span class="big">'+fmt(n,1)+'</span><div><b>'+(pass?"¡Aprobado!":"No aprobado")+'</b><p class="muted tnum">'+ok+' de '+current.length+(current.length===1?' respuesta correcta':' respuestas correctas')+' ('+Math.round(p*100)+'%).</p><p class="muted">'+(pass?"Continúa al cierre del curso.":(left>0?"Te queda "+pl(left,"intento","intentos")+" más. Repasa los módulos y vuelve a intentarlo. Las preguntas cambian en cada intento.":"Usaste todos tus intentos. Contacta a tu relator u OTEC."))+'</p></div></div>'+(!pass&&left>0?'<button class="btn primary" type="button" id="retry" style="align-self:flex-start">Nuevo intento</button>':'')+(pass?'<button class="btn primary" type="button" id="toEnd" style="align-self:flex-start">Ir al cierre</button>':'');
+  document.getElementById("examResult").scrollIntoView({behavior:"smooth"});
+  var r=document.getElementById("retry"); if(r) r.onclick=function(){ document.getElementById("examStart").click(); };
+  var e=document.getElementById("toEnd"); if(e) e.onclick=function(){ go(lessons.length-1); };
+  if(SCORM.active()){
+    SCORM.set("cmi.core.score.min","0"); SCORM.set("cmi.core.score.max","100");
+    SCORM.set("cmi.core.score.raw", String(state.bp||0));
+    SCORM.set("cmi.core.lesson_status", pass ? "passed" : (left>0 ? "incomplete" : "failed"));
+  }
+  updateProgress(); save();
+});
+function downloadCert(nombre){
+  var c=document.createElement("canvas"); c.width=1600; c.height=1130; var g=c.getContext("2d");
+  g.fillStyle="#ffffff"; g.fillRect(0,0,1600,1130); g.strokeStyle="#1d3a66"; g.lineWidth=14; g.strokeRect(40,40,1520,1050);
+  g.fillStyle="#c2410c"; g.fillRect(40,40,1520,26);
+  var logo=new Image(); logo.onload=function(){
+    var h=150, w=logo.width*h/logo.height; g.drawImage(logo,800-w/2,110,w,h);
+    g.textAlign="center"; g.fillStyle="#c2410c"; g.font="600 34px Arial"; g.fillText("CONSTANCIA DE APROBACIÓN",800,330);
+    g.fillStyle="#16223a"; var fsz=64; g.font="700 "+fsz+"px Arial"; while(g.measureText(nombre).width>1380 && fsz>30){ fsz-=2; g.font="700 "+fsz+"px Arial"; } g.fillText(nombre,800,450,1400);
+    g.font="32px Arial"; g.fillStyle="#333"; g.fillText("Ha aprobado el curso e-learning",800,540);
+    g.font="700 40px Arial"; g.fillStyle="#16223a"; g.fillText("Norma NFPA 70E: seguridad eléctrica en lugares de trabajo",800,600);
+    g.font="32px Arial"; g.fillStyle="#333"; g.fillText("con nota "+fmt(state.best,1)+" · "+new Date().toLocaleDateString("es-CL",{day:"numeric",month:"long",year:"numeric"}),800,670);
+    g.font="26px Arial"; g.fillStyle="#56627a"; g.fillText("Duración: "+CONFIG.horas+" · Modalidad e-learning asincrónico",800,740);
+    g.fillText("El certificado oficial es emitido por SSGI OTEC.",800,1000);
+    c.toBlob(function(b){ var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="Constancia_NFPA70E_"+nombre.replace(/[^\wáéíóúñÁÉÍÓÚÑ]+/g,"_")+".png"; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },1500); });
+  };
+  logo.src="img/logo.png";
+}
+function renderConstancia(){
+  var c=document.getElementById("constancia");
+  if(!state.passed){ c.innerHTML='<div class="callout"><b class="k">Pendiente</b><p>Aprueba la evaluación final para completar el curso.</p></div>'; return; }
+  var name=SCORM.get("cmi.core.student_name"); if(name && name.indexOf(",")>0){ var p=name.split(","); name=(p[1]+" "+p[0]).trim(); }
+  c.innerHTML='<div class="constancia"><img width="256" height="193" src="img/logo.png" alt="SSGI OTEC"><span class="eyebrow">Constancia de aprobación</span><h3 id="cName"></h3><p>Ha aprobado el curso <b>Norma NFPA 70E: seguridad eléctrica en lugares de trabajo</b> con nota <b class="tnum">'+fmt(state.best,1)+'</b>.</p><p class="muted">El certificado oficial es emitido por SSGI OTEC.</p><div class="cert-actions" id="certActions"></div></div>';
+  document.getElementById("cName").textContent = name || "Participante";
+  var inClaude=/claude|anthropic/i.test(location.hostname);
+  if(!inClaude){
+    var nm=document.createElement("label"); nm.style.cssText="display:flex;flex-direction:column;gap:4px;font-size:.9rem;text-align:left";
+    nm.innerHTML='Nombre para la constancia<input id="certName" type="text" autocomplete="name" maxlength="80" enterkeyhint="done" style="font:inherit;padding:10px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--ink);min-height:44px">';
+    var bt=document.createElement("button"); bt.type="button"; bt.className="btn primary"; bt.innerHTML=ICO("down")+"Descargar constancia";
+    var ca=document.getElementById("certActions"); ca.appendChild(nm); ca.appendChild(bt);
+    document.getElementById("certName").value=name||"";
+    document.getElementById("certName").oninput=function(e){ document.getElementById("cName").textContent=e.target.value||"Participante"; };
+    bt.onclick=function(){ downloadCert(document.getElementById("certName").value||name||"Participante"); };
+  }
+}
+
+/* Guion de relato del curso NFPA 70E — SSGI OTEC.
+   Un texto por lección, en el mismo orden que el índice. Los números y unidades
+   están escritos como se pronuncian, para que la lectura en voz alta suene natural. */
+var NARR = [
+/* 0 Bienvenida */
+"Hola, te damos la bienvenida al curso Norma NFPA setenta E, seguridad eléctrica en lugares de trabajo, de SSGI OTEC. " +
+"En las próximas horas vamos a hablar de uno de los riesgos más graves del trabajo eléctrico: el arco eléctrico. " +
+"Aprenderás a reconocerlo, a entender cómo se calcula la energía que libera, y a elegir la protección adecuada para volver a casa sano y salvo. " +
+"El curso tiene cuatro módulos. En el primero revisamos el marco normativo. En el segundo, los riesgos eléctricos y cómo se produce un arco. En el tercero hacemos el estudio de Arc Flash con un ejemplo real. Y en el cuarto vemos las medidas de control y el equipo de protección personal. " +
+"Avanzas a tu ritmo, y tu progreso se guarda automáticamente. Cada módulo termina con una autoevaluación sin nota. Al revisar todas las lecciones se habilita la evaluación final, que apruebas con nota cuatro coma cero. " +
+"Te recomendamos tener a mano una calculadora científica para el módulo tres. Cuando estés listo, presiona Siguiente y comencemos.",
+
+/* 1 Propósito */
+"Comencemos por lo esencial: ¿para qué existe la NFPA setenta E? " +
+"Es una norma estadounidense que establece los requisitos de seguridad eléctrica en los lugares de trabajo. Su propósito es proveer, de forma práctica, un área de trabajo segura frente a los riesgos de la electricidad, en especial frente al arco eléctrico. " +
+"La idea central es simple. La primera opción siempre es trabajar sin tensión. Pero si en una intervención no es posible desconectar la energía, la persona debe aumentar su nivel de protección corporal, para no exponer su cuerpo a una energía calórica que no puede tolerar si ocurre una falla con arco. " +
+"Esta norma marcó un antes y un después. Ya no basta con decir: tenga cuidado. Hay que estimar cuánta energía se liberaría en una falla y protegerse en consecuencia. " +
+"En la práctica, eso significa evaluar el riesgo antes de cada trabajo, dejar el equipo en condición segura siempre que se pueda, justificar y planificar cualquier trabajo energizado, y contar con personal capacitado y calificado.",
+
+/* 2 Origen y marco normativo */
+"Veamos de dónde viene esta norma y cómo se conecta con la normativa chilena. " +
+"En mil novecientos setenta y seis, a solicitud de OSHA, la agencia de seguridad y salud ocupacional de Estados Unidos, se creó el comité de la NFPA setenta E. Su primera edición se publicó en mil novecientos setenta y ocho, y desde entonces se revisa aproximadamente cada tres años. Por eso, antes de aplicarla, verifica siempre cuál es la edición vigente. " +
+"¿Y en Chile? La antigua norma eléctrica NCh Elec cuatro, del año dos mil tres, fue reemplazada por el reglamento aprobado mediante el Decreto Supremo número ocho del Ministerio de Energía, que se complementa con diecinueve pliegos técnicos RIC, fiscalizados por la Superintendencia de Electricidad y Combustibles. " +
+"Uno de ellos es clave para nosotros: el RIC número diecisiete, de operación y mantenimiento. Este pliego hace referencia a la aplicación de la NFPA setenta E en las intervenciones del personal electricista. " +
+"En resumen: la NFPA setenta E nos dice cómo trabajar seguro. El Decreto ocho y los pliegos RIC nos dicen qué deben cumplir las instalaciones en Chile. Y el RIC diecisiete conecta ambos mundos.",
+
+/* 3 Alcance */
+"¿Qué actividades cubre la norma? " +
+"La NFPA setenta E trata las prácticas de trabajo relacionadas con la seguridad eléctrica, los requisitos de mantenimiento vinculados a la seguridad, y otros controles administrativos que protegen a los trabajadores. " +
+"Esto aplica durante cinco grandes tipos de actividades: la instalación, la inspección, la operación, el mantenimiento y el desmantelamiento de conductores y equipos eléctricos. " +
+"Toca cada tarjeta en pantalla para ver un ejemplo de cada una. " +
+"Luego, realiza la actividad: lee cada situación y decide si está cubierta o no por la norma. Una pista: si la persona puede quedar expuesta a un peligro eléctrico mientras trabaja, la actividad está dentro del alcance.",
+
+/* 4 Autoevaluación M1 */
+"Llegamos al final del módulo uno. Es momento de comprobar lo aprendido. " +
+"Responde las tres preguntas en pantalla. No tienen nota, y recibirás retroalimentación inmediata. Si te equivocas, lee la explicación y vuelve a intentarlo. " +
+"Cuando termines, continúa al módulo dos, donde conoceremos de cerca al arco eléctrico.",
+
+/* 5 Riesgos */
+"Bienvenido al módulo dos. Hablemos de los riesgos en sistemas eléctricos. " +
+"Los accidentes de origen eléctrico se agrupan en dos grandes tipos. " +
+"El primero es el choque eléctrico, o electrocución. Ocurre cuando la corriente circula a través del cuerpo, al tocar una parte energizada. Puede provocar un paro cardíaco, quemaduras internas o caídas. " +
+"El segundo es el arco eléctrico, conocido en inglés como Arc Flash. Aquí la corriente circula a través del aire entre conductores. Libera calor, luz intensa y una onda de presión que alcanzan a la persona, incluso sin que haya tocado nada. " +
+"Ambos riesgos pueden estar presentes en el mismo trabajo, y por eso la norma exige evaluar los dos. Contra el choque nos protegen el aislamiento y las distancias. Contra el arco nos protegen reducir la energía incidente, aumentar la distancia, y usar ropa con clasificación de arco.",
+
+/* 6 Qué es un arco */
+"¿Qué es exactamente un arco eléctrico? " +
+"Es una descarga disruptiva: la corriente logra atravesar por completo el aire que separa a dos conductores de distinto potencial. El circuito se cierra a través del aire, y circula lo que llamamos corriente de arco. El arco se ve como una columna de gas incandescente, el plasma, entre los dos conductores. " +
+"Observa el diagrama. A la izquierda, una falla sólida: un elemento metálico une las fases A y B. La corriente de cortocircuito es máxima, y gran parte de la energía se disipa en los conductores. " +
+"A la derecha, una falla por arco: las fases quedan unidas por plasma a través del aire. Como el plasma tiene impedancia, la corriente de arco es menor que la de falla sólida. " +
+"Y aquí hay un detalle muy importante: esa corriente menor puede hacer que la protección demore más en operar. Mientras más dura el arco, más energía se libera hacia el trabajador.",
+
+/* 7 Efectos */
+"Ahora veamos qué produce un arco eléctrico en apenas unos milisegundos. " +
+"La temperatura en el punto de arco puede llegar a cerca de diecinueve mil cuatrocientos grados Celsius, varias veces la temperatura de la superficie del sol. " +
+"El cobre, al pasar de sólido a vapor, se expande unas sesenta y siete mil veces. Eso genera una onda de presión capaz de derribar o proyectar a una persona. " +
+"Además, se proyecta metal derretido a más de novecientos ochenta grados, esquirlas a más de mil cien kilómetros por hora, y un ruido sobre los ciento cuarenta decibeles que puede dañar los oídos. A esto se suman aire caliente sobre los doscientos sesenta grados y una luz intensa que daña la vista. " +
+"El resultado, casi siempre, son quemaduras de segundo y tercer grado. Y ojo: la ropa común de algodón o sintética puede encenderse o derretirse sobre la piel, y agravar las lesiones.",
+
+/* 8 Cómo se produce */
+"¿Cómo se inicia un arco eléctrico? Revisemos las causas más frecuentes. " +
+"Primero, los contactos accidentales: tocar sin querer una parte energizada con una punta de prueba, un cable suelto o una herramienta. " +
+"Segundo, la caída de herramientas: una herramienta que cae entre fases provoca un cortocircuito momentáneo, chispas, y el arco comienza. " +
+"Tercero, las sobretensiones en espacios estrechos: si la distancia entre fases se reduce por mala calidad o daño de los conductores, una sobretensión temporal puede iniciar el arco. " +
+"También influyen el polvo conductor, la humedad, la corrosión, las conexiones sueltas y el aislamiento deteriorado. Muchas de estas condiciones se detectan con un buen programa de mantenimiento. " +
+"Ahora te invito a analizar el caso en pantalla y a identificar qué causa de arco se presenta.",
+
+/* 9 Autoevaluación M2 */
+"Terminamos el módulo dos. Comprueba lo aprendido con las tres preguntas en pantalla. " +
+"Recuerda que no tienen nota y que puedes intentarlo las veces que necesites. " +
+"En el módulo tres pasamos a los números: vamos a calcular cuánta energía libera un arco.",
+
+/* 10 Variables */
+"Bienvenido al módulo tres, el estudio de Arc Flash. " +
+"La gravedad de las lesiones depende de tres variables. La primera es la corriente de arco, que depende de la corriente de cortocircuito del sistema. La segunda es el tiempo que demora la protección en despejar la falla. Y la tercera es la distancia entre el arco y la persona. " +
+"Por eso, el estudio de Arc Flash se apoya en dos estudios previos: el de cortocircuito y el de coordinación de protecciones. Con ellos se calcula la energía incidente, el límite de arco, y el equipo de protección necesario. Este cálculo lo realiza personal calificado, siguiendo la NFPA setenta E y la norma IEEE quince ochenta y cuatro. " +
+"Ahora prueba el simulador. Primero, deja la distancia fija y aumenta el tiempo de despeje: verás que la energía crece en la misma proporción. Luego, aumenta la distancia: verás que la energía cae rápidamente. " +
+"La conclusión es clara: una protección rápida y una buena distancia de trabajo son dos de las mejores barreras contra el arco.",
+
+/* 11 Método IEEE 1584 */
+"En esta lección revisamos el método de cálculo de la norma IEEE quince ochenta y cuatro. Usamos las ecuaciones de su edición dos mil dos, que son las más empleadas para enseñar. La edición vigente, de dos mil dieciocho, usa un modelo más completo, y en la práctica los estudios se hacen con software especializado. " +
+"El cálculo tiene cuatro pasos. " +
+"Paso uno: la corriente de arco. Para tensiones de hasta mil volts se usa la ecuación logarítmica que ves en pantalla. Depende de la corriente de falla sólida, de la tensión en kilovolts, de la separación entre conductores, y de una constante K que cambia si el arco ocurre al aire libre o dentro de una caja. Un error frecuente es reemplazar la tensión en volts. Recuerda: trescientos ochenta volts son cero coma tres ocho kilovolts. " +
+"Paso dos: la energía incidente normalizada, calculada para un arco de cero coma dos segundos y una distancia de seiscientos diez milímetros. " +
+"Paso tres: la energía incidente real, que ajusta la energía normalizada según el tiempo real de despeje y la distancia de trabajo. El resultado sale en joules por centímetro cuadrado. Para pasarlo a calorías por centímetro cuadrado, se divide por cuatro coma uno ocho cuatro. " +
+"Y paso cuatro: el límite de arco, que es la distancia donde la energía baja a uno coma dos calorías por centímetro cuadrado, el umbral de una quemadura de segundo grado. " +
+"Al final de la lección tienes la tabla de parámetros por tipo de equipo. Tómate el tiempo de revisarla.",
+
+/* 12 Ejemplo */
+"Vamos a un caso real. Una subestación de trescientos kilovoltamperes, de veintitrés a cero coma cuatro kilovolts, alimenta una planta industrial. La placa del transformador indica una impedancia de cuatro coma dos por ciento. " +
+"Durante una mantención, un electricista provoca accidentalmente un cortocircuito con arco en los bornes superiores del interruptor general. Queremos saber la corriente de arco, la energía incidente, y la protección que necesitaba. " +
+"Presiona el botón Ver siguiente paso a medida que avanzamos. " +
+"Paso uno: la corriente nominal del transformador es su potencia dividida por raíz de tres por la tensión. Resultado: unos cuatrocientos cincuenta y seis amperes. " +
+"Paso dos: la corriente de cortocircuito es la corriente nominal dividida por la impedancia en por unidad, cero coma cero cuatro dos. Resultado: diez coma ocho cinco kiloamperes. " +
+"Paso tres: aplicando la ecuación, la corriente de arco resulta cinco coma siete siete kiloamperes. Casi la mitad de la corriente de falla sólida. " +
+"Paso cuatro: la energía normalizada es uno coma cinco cinco joules por centímetro cuadrado. " +
+"Paso cinco: con un tiempo de despeje de cero coma cero dos segundos y las manos del trabajador a cien milímetros, la energía incidente es dieciocho coma nueve joules por centímetro cuadrado, es decir, cuatro coma cinco calorías por centímetro cuadrado. " +
+"Paso seis: el límite de arco es de doscientos veinticinco milímetros. " +
+"Paso siete, la interpretación. Cuatro coma cinco calorías superan a la categoría uno, que protege hasta cuatro. Por lo tanto, se necesita equipo de al menos ocho calorías por centímetro cuadrado, es decir, categoría dos. " +
+"Fíjate en el análisis final: si el trabajador estuviera a cuatrocientos cincuenta y cinco milímetros, la energía bajaría a menos de cero coma cuatro calorías. La distancia hace una enorme diferencia.",
+
+/* 13 Calculadora */
+"Ahora es tu turno de experimentar. Esta calculadora aplica las mismas ecuaciones del ejemplo, y viene cargada con sus datos. " +
+"Te propongo tres ejercicios. Primero, cambia la distancia de trabajo de cien a cuatrocientos cincuenta y cinco milímetros, y observa cómo cambia la categoría de protección. " +
+"Segundo, vuelve a cien milímetros y aumenta el tiempo de despeje de cero coma cero dos a cero coma dos segundos. Es lo que pasaría si la protección no operara en su zona instantánea. " +
+"Tercero, prueba con un transformador más grande, por ejemplo de mil kilovoltamperes. " +
+"Recuerda que esta es una herramienta educativa. Un estudio real de Arc Flash lo debe realizar personal calificado, con datos del sistema y la edición vigente de la norma.",
+
+/* 14 Autoevaluación M3 */
+"Terminamos el módulo tres, el más técnico del curso. ¡Buen trabajo! " +
+"Responde las cuatro preguntas de la autoevaluación. Una de ellas te pide convertir joules a calorías: recuerda dividir por cuatro coma uno ocho cuatro. " +
+"Después seguimos con el módulo cuatro, donde transformamos estos números en decisiones de protección.",
+
+/* 15 Lesiones */
+"Bienvenido al módulo cuatro. Para dimensionar las cifras que calculamos, veamos qué significan para el cuerpo humano. " +
+"Una caloría por centímetro cuadrado equivale a poner la punta del dedo sobre la llama de un encendedor durante un segundo. " +
+"Con uno coma dos calorías por centímetro cuadrado, la piel desnuda sufre una quemadura de segundo grado instantánea. Por eso ese valor define el límite de arco. " +
+"Con cuatro calorías, una camisa de algodón se enciende de inmediato. " +
+"Y con ocho calorías se produce una quemadura de tercer grado, incurable. " +
+"Por eso el análisis de Arc Flash es tan importante. Permite conocer la energía incidente, la distancia de protección, y el equipo correcto. Y también evita sobredimensionar el equipo: un traje más pesado de lo necesario reduce la movilidad y la visibilidad, y aumenta el calor y el cansancio del trabajador.",
+
+/* 16 Categorías EPP */
+"La NFPA setenta E agrupa el equipo de protección contra arco en cuatro categorías. Cada una indica la clasificación mínima de arco de la ropa, en calorías por centímetro cuadrado. " +
+"La categoría uno exige al menos cuatro calorías: camisa y pantalón, u overol, con clasificación de arco, protector facial, casco, lentes, protección auditiva, guantes de cuero y calzado de cuero. " +
+"La categoría dos exige al menos ocho calorías, y agrega un pasamontañas con clasificación de arco, o una capucha. " +
+"La categoría tres exige al menos veinticinco calorías, con traje completo y capucha. " +
+"Y la categoría cuatro exige al menos cuarenta calorías. " +
+"¿Y si la energía supera las cuarenta calorías? No hay categoría que proteja. El trabajo debe hacerse sin tensión, o hay que reducir la energía incidente. " +
+"Un aviso para quienes conocieron ediciones antiguas: la categoría cero, con ropa de algodón, ya no existe. Si tus procedimientos todavía la mencionan, es momento de actualizarlos.",
+
+/* 17 Jerarquía */
+"El equipo de protección personal es la última barrera, no la primera. La NFPA setenta E exige aplicar una jerarquía de controles, en este orden. " +
+"Uno, eliminación: dejar el equipo en condición de trabajo eléctricamente segura. Desenergizar, bloquear, etiquetar y verificar ausencia de tensión. Sin energía no hay arco. " +
+"Dos, sustitución: cambiar equipos por otros con menor riesgo. " +
+"Tres, controles de ingeniería: por ejemplo relés de arco, el modo de mantenimiento de los interruptores, o la operación remota. " +
+"Cuatro, señalización: etiquetas de arco eléctrico y delimitación del límite de arco. " +
+"Cinco, controles administrativos: procedimientos, permisos de trabajo energizado y capacitación. " +
+"Y seis, recién al final, el equipo de protección personal. " +
+"Ahora resuelve las dos actividades en pantalla: elegir el equipo para una etiqueta de once coma seis calorías, e identificar el nivel de control de un interruptor con modo de mantenimiento.",
+
+/* 18 Autoevaluación M4 */
+"Terminaste todos los módulos del curso. Responde la última autoevaluación, de tres preguntas. " +
+"Luego, antes de rendir la evaluación final, te recomendamos repasar el ejemplo práctico del módulo tres y la tabla de categorías de equipo de protección. " +
+"¡Ya casi lo logras!",
+
+/* 19 Evaluación final */
+"Llegó el momento de la evaluación final. " +
+"Son quince preguntas de selección múltiple, elegidas al azar. No hay límite de tiempo, así que lee cada pregunta con calma. " +
+"La escala es de uno a siete, con un sesenta por ciento de exigencia. Apruebas con nota cuatro coma cero, es decir, con al menos nueve respuestas correctas. " +
+"Tienes dos intentos, y se considera tu mejor nota. Si no apruebas en el primero, repasa los módulos: las preguntas cambian en cada intento. " +
+"Cuando estés listo, presiona Comenzar evaluación. ¡Mucho éxito!",
+
+/* 20 Cierre */
+"Felicitaciones por llegar al final del curso. " +
+"Antes de despedirnos, llévate estas cuatro ideas al terreno. " +
+"Primera: desenergizar es siempre la primera opción. " +
+"Segunda: la energía incidente depende de la corriente de arco, del tiempo de despeje, y de la distancia. " +
+"Tercera: el equipo de protección se elige con una clasificación de arco igual o mayor que la energía incidente. " +
+"Y cuarta: respeta el límite de arco y lee la etiqueta de cada tablero antes de intervenirlo. " +
+"Tienes disponible un glosario y las referencias para consultar cuando lo necesites. " +
+"Gracias por tu participación. Trabaja seguro, y vuelve a casa cada día. Te saluda el equipo de SSGI OTEC."
+];
+
+
+/* ================== RELATO ================== */
+var Relato=(function(){
+  var synth=window.speechSynthesis, ok=!!(synth && window.SpeechSynthesisUtterance);
+  var voice=null, rate=1, auto=false, first=true, token=0, cur=-1, sents=[], pos=0, paused=false;
+  function pickVoice(){
+    if(!ok) return; var vs=[]; try{ vs=synth.getVoices()||[]; }catch(e){}
+    var es=vs.filter(function(v){ return /^es/i.test(v.lang); });
+    function score(v){ var sc=0, l=v.lang.toLowerCase(), n=v.name.toLowerCase();
+      if(l==="es-cl") sc+=50; else if(/es-(419|us|mx|ar|co|pe)/.test(l)) sc+=30; else if(l==="es-es") sc+=15;
+      if(/natural|neural|online/.test(n)) sc+=40; if(/google/.test(n)) sc+=25; return sc; }
+    es.sort(function(a,b){ return score(b)-score(a); }); voice=es[0]||null;
+  }
+  if(ok){ pickVoice(); try{ synth.addEventListener("voiceschanged",pickVoice); }catch(e){ synth.onvoiceschanged=pickVoice; } }
+  function split(t){ return t.match(/[^.!?¿¡]*[¿¡]?[^.!?]*[.!?]+["»]?\s*/g).map(function(x){return x.trim();}).filter(Boolean); }
+  var boxes=[];
+  function ui(i){ return boxes[i]; }
+  function build(){
+    lessons.forEach(function(l,i){
+      var text=NARR[i]; if(!text) return;
+      var parts=split(text), box=document.createElement("div"); box.className="narr";
+      box.innerHTML='<div class="narr-bar"><span class="who">Relato de la lección</span>'+
+        '<button type="button" class="btn primary sm np"></button>'+
+        '<button type="button" class="btn sm ns" hidden>'+ICO("stop")+'Detener</button>'+
+        '<label>Velocidad <select class="nr" id="nr'+i+'"><option value="0.9">0,9×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option><option value="1.3">1,3×</option></select></label>'+
+        '<label><input type="checkbox" class="na" id="na'+i+'"> Relato automático</label></div>'+
+                '<details><summary>Ver texto completo del relato</summary><p></p></details>'+
+        (ok?'':'<p class="note">Este navegador no permite la lectura en voz alta. Puedes leer el texto completo del relato.</p>');
+      var p=box.querySelector("details p");
+      parts.forEach(function(t,k){ var sp=document.createElement("span"); sp.textContent=t+" "; sp.dataset.k=k; p.appendChild(sp); });
+      if(!ok){ box.querySelector(".np").hidden=true; box.querySelector(".nr").parentNode.hidden=true; box.querySelector(".na").parentNode.hidden=true; }
+      box.querySelector(".np").onclick=function(){ toggle(i); };
+      box.querySelector(".ns").onclick=function(){ stop(); };
+      box.querySelector(".nr").onchange=function(e){ rate=+e.target.value; sync(); if(cur===i && !paused){ var k=pos; speakFrom(i,k); } };
+      box.querySelector(".na").onchange=function(e){ auto=e.target.checked; sync(); };
+      var head=l.querySelector(":scope > header")||l.querySelector(":scope > .hero");
+      if(head) head.insertAdjacentElement("afterend",box); else l.insertBefore(box,l.firstChild);
+      boxes[i]={box:box,parts:parts};
+    });
+  }
+  function sync(){ boxes.forEach(function(b){ if(!b) return; b.box.querySelector(".nr").value=String(rate); b.box.querySelector(".na").checked=auto; }); }
+  function paint(){
+    boxes.forEach(function(b,i){ if(!b) return;
+      var active=i===cur, np=b.box.querySelector(".np");
+      np.innerHTML = active && !paused ? ICO("pause")+"Pausar" : (active && paused ? ICO("play")+"Continuar" : ICO("play")+"Escuchar");
+      b.box.querySelector(".ns").hidden=!active;
+      b.box.querySelectorAll("details span").forEach(function(sp){ sp.classList.toggle("on", active && +sp.dataset.k===pos); });
+    });
+    var st=document.getElementById("subtitle"), cb=boxes[cur];
+    if(cur>=0 && cb && !paused && cb.parts[pos]){ st.hidden=false; st.textContent=cb.parts[pos]; } else { st.hidden=true; st.textContent=""; }
+  }
+  function speakFrom(i,k){
+    if(!ok) return; var my=++token; try{ synth.cancel(); }catch(e){}
+    cur=i; pos=k; paused=false; sents=boxes[i].parts; paint();
+    (function next(){
+      if(my!==token) return;
+      if(pos>=sents.length){ cur=-1; paint(); return; }
+      var u=new SpeechSynthesisUtterance(sents[pos]); u.lang=voice?voice.lang:"es-CL"; if(voice){ try{ u.voice=voice; }catch(e){} } u.rate=rate;
+      u.onend=function(){ if(my!==token) return; pos++; paint(); next(); };
+      u.onerror=function(){ if(my!==token) return; pos++; next(); };
+      paint(); synth.speak(u);
+    })();
+  }
+  function toggle(i){
+    if(first){ first=false; auto=true; sync(); }
+    if(cur===i){ if(paused){ paused=false; speakFrom(i,pos); } else { paused=true; token++; try{ synth.cancel(); }catch(e){} paint(); } return; }
+    speakFrom(i,0);
+  }
+  function stop(){ token++; try{ synth&&synth.cancel(); }catch(e){} cur=-1; paused=false; paint(); }
+  function onLesson(i){ stop(); if(auto && ok && boxes[i]) setTimeout(function(){ speakFrom(i,0); },350); }
+  function enable(){ first=false; auto=true; sync(); if(ok){ try{ synth.cancel(); synth.speak(new SpeechSynthesisUtterance(" ")); }catch(e){} } }
+  return {build:build,onLesson:onLesson,stop:stop,enable:enable};
+})();
+Relato.build();
+
+/* ================== INICIO ================== */
+document.getElementById("cfgHoras").textContent=CONFIG.horas;
+document.getElementById("cfgIntentos").textContent=CONFIG.intentos;
+load();
+var startAt=state.cur||0; var loc=SCORM.get("cmi.core.lesson_location"); if(loc!=="" && !isNaN(+loc)) startAt=+loc;
+var hk=slugs.indexOf(location.hash.slice(1)); if(hk>=0) startAt=hk;
+go(startAt,{push:false,focus:false});
+booted=true;
+try{ history.replaceState({i:startAt},"","#"+slugs[startAt]); }catch(e){}
+if(!SCORM.active()) document.getElementById("localNote").hidden=false;
+(function(){ var sb=document.getElementById('startBtn'), rb=document.getElementById('resumeBtn');
+  var last=state.v.filter(function(i){return i>0;}).length? Math.max.apply(null,state.v.filter(function(i){return i<lessons.length;})) : 0;
+  if(last>1){ rb.hidden=false; rb.onclick=function(){ Relato.enable(); go(last); }; }
+  sb.onclick=function(){ Relato.enable(); go(1); };
+  document.querySelectorAll(".profile").forEach(function(b){ b.onclick=function(){ var a=b.dataset.act; if(a==="start"){ Relato.enable(); go(1); } else { var t=document.getElementById(a); if(t){ t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}); t.setAttribute("tabindex","-1"); t.focus({preventScroll:true}); } } }; });
+  document.querySelectorAll(".mod-row").forEach(function(b){ b.onclick=function(){ go(+b.dataset.go); }; });
+})();
+</script>
+
+</body>
+</html>

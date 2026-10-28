@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="SSGI_NFPA70E_2026" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata><schema>ADL SCORM</schema><schemaversion>1.2</schemaversion></metadata>
+  <organizations default="SSGI_ORG">
+    <organization identifier="SSGI_ORG">
+      <title>Norma NFPA 70E: Seguridad eléctrica en lugares de trabajo</title>
+      <item identifier="ITEM_1" identifierref="RES_1" isvisible="true">
+        <title>Curso NFPA 70E - SSGI OTEC</title>
+        <adlcp:masteryscore>60</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="RES_1" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="img/arco-cables.webp"/>
+      <file href="img/arco-chispa.webp"/>
+      <file href="img/arco-flash.webp"/>
+      <file href="img/arco.webp"/>
+      <file href="img/choque.webp"/>
+      <file href="img/curva-bcd.webp"/>
+      <file href="img/curva.webp"/>
+      <file href="img/epp-categorias.webp"/>
+      <file href="img/epp-traje.webp"/>
+      <file href="img/explosion.webp"/>
+      <file href="img/fuentes-arco.webp"/>
+      <file href="img/interruptor.webp"/>
+      <file href="img/lesion1.webp"/>
+      <file href="img/lesion2.webp"/>
+      <file href="img/lesion3.webp"/>
+      <file href="img/logo.png"/>
+      <file href="img/placa.webp"/>
+      <file href="img/plasma.webp"/>
+      <file href="img/portada.webp"/>
+      <file href="img/ric17.webp"/>
+      <file href="img/software.webp"/>
+      <file href="img/subestacion.webp"/>
+      <file href="img/tablero.webp"/>
+    </resource>
+  </resources>
+</manifest>
